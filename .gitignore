@@ -12,11 +12,18 @@ node_modules/
 
 # Misc
 .DS_Store
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# .env files are now included for development convenience
+# .env 파일들을 개발 편의를 위해 포함함
+# .env
+# .env.local
+# .env.development.local
+# .env.test.local
+# .env.production.local
+
+# Only ignore production secrets
+# 프로덕션 비밀 정보만 무시
+.env.production
+.env.secrets
 
 # Logs
 npm-debug.log*
