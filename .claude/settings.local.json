@@ -55,7 +55,17 @@
       "Bash(cp:*)",
       "WebFetch(domain:verachain-8nrdsq1mg-prior89s-projects.vercel.app)",
       "Bash(start \"C:\\Users\\VeraChain\\api-connection-test.html\")",
-      "Bash(start cors-test.html)"
+      "Bash(start cors-test.html)",
+      "WebFetch(domain:verachain-jn5m00a89-prior89s-projects.vercel.app)",
+      "Bash(start \"C:\\Users\\VeraChain\\complete-functionality-test.html\")",
+      "Bash(start \"C:\\Users\\VeraChain\\user-function-test.html\")",
+      "Bash(start \"C:\\Users\\VeraChain\\complete-functionality-test.html\")",
+      "Bash(start \"C:\\Users\\VeraChain\\enhanced-auth-test.html\")",
+      "Bash(git commit:*)",
+      "Bash(npm run start:*)",
+      "Bash(start http://localhost:3000)",
+      "Bash(start \"https://verachain-pl.vercel.app\")",
+      "Bash(start \"C:\\Users\\VeraChain\\FRONTEND_DEBUG_TOOL.html\")"
     ],
     "deny": []
   }

@@ -1,6 +1,28 @@
 /**
- * AI Service with Fallback Implementation
- * Works with Node.js v22 on Windows
+ * VeraChain AI 서비스 (VeraChain AI Service)
+ * 제품 진품 인증을 위한 AI 이미지 분석 서비스
+ * AI image analysis service for product authenticity verification
+ * 
+ * 주요 기능 (Main Features):
+ * - 이미지 전처리 및 품질 분석 (Image preprocessing and quality analysis)
+ * - 제품 진품 인증 AI 분석 (AI analysis for product authenticity)
+ * - 이미지 변조 탐지 (Image tampering detection)
+ * - 특징 추출 및 유사도 매칭 (Feature extraction and similarity matching)
+ * 
+ * 기술 스택 (Tech Stack):
+ * - Sharp: 고성능 이미지 처리 (High-performance image processing)
+ * - Node.js v22 호환성 모드 (Node.js v22 compatibility mode)
+ * - TensorFlow.js (프로덕션에서 활용 예정) (To be used in production)
+ * 
+ * 개발자 참고사항 (Developer Notes):
+ * - 현재 호환성 모드로 실행 (Currently running in compatibility mode)
+ * - 프로덕션에서는 실제 ML 모델 로드 필요 (Production requires real ML model loading)
+ * - 이미지 품질에 따라 분석 정확도 달라짐 (Analysis accuracy varies by image quality)
+ * - 메모리 효율성을 위해 싱글톤 패턴 사용 (Uses singleton pattern for memory efficiency)
+ * 
+ * 지원 브랜드 (Supported Brands):
+ * - Chanel, Louis Vuitton, Hermes, Gucci, Rolex
+ * - 확장 가능한 구조 (Expandable architecture)
  */
 
 const sharp = require('sharp');

@@ -251,19 +251,42 @@ const sanitizeRequest = (req, res, next) => {
 };
 
 /**
- * Privacy headers middleware
+ * 개인정보 보호 헤더 미들웨어 (Privacy headers middleware)
+ * 응답 헤더가 이미 전송되지 않은 경우에만 보안 헤더를 설정합니다
+ * Sets security headers only if response headers haven't been sent yet
+ * 
+ * 보안 헤더 설명 (Security headers explanation):
+ * - X-Content-Type-Options: MIME 스니핑 방지 (Prevent MIME sniffing)
+ * - X-Frame-Options: 클릭재킹 방지 (Prevent clickjacking) 
+ * - X-XSS-Protection: XSS 공격 방지 (XSS attack prevention)
+ * - Referrer-Policy: 레퍼러 정보 차단 (Block referrer information)
+ * - Permissions-Policy: 브라우저 API 접근 제한 (Limit browser API access)
+ * - Cache-Control: 민감한 데이터 캐싱 방지 (Prevent sensitive data caching)
+ * 
+ * 오픈소스 호환성 (Open Source Compatibility):
+ * - 표준 HTTP 헤더만 사용 (Uses only standard HTTP headers)
+ * - 브라우저 보안 표준 준수 (Complies with browser security standards)
  */
 const privacyHeaders = (req, res, next) => {
-  res.set({
-    'X-Content-Type-Options': 'nosniff',
-    'X-Frame-Options': 'DENY',
-    'X-XSS-Protection': '1; mode=block',
-    'Referrer-Policy': 'no-referrer',
-    'Permissions-Policy': 'geolocation=(), microphone=(), camera=()',
-    'Cache-Control': 'no-store, no-cache, must-revalidate, private',
-    'Pragma': 'no-cache',
-    'Expires': '0'
-  });
+  // 헤더가 이미 전송되었는지 확인 (Check if headers are already sent)
+  if (!res.headersSent) {
+    try {
+      // 보안 헤더 설정 (Set security headers)
+      res.set({
+        'X-Content-Type-Options': 'nosniff',           // MIME 타입 스니핑 방지 (Prevent MIME type sniffing)
+        'X-Frame-Options': 'DENY',                     // iframe 내 로딩 금지 (Deny loading in frames)
+        'X-XSS-Protection': '1; mode=block',           // XSS 필터 활성화 (Enable XSS filter)
+        'Referrer-Policy': 'no-referrer',              // 레퍼러 정보 전송 안함 (Don't send referrer info)
+        'Permissions-Policy': 'geolocation=(), microphone=(), camera=()', // API 권한 제한 (Limit API permissions)
+        'Cache-Control': 'no-store, no-cache, must-revalidate, private', // 캐싱 방지 (Prevent caching)
+        'Pragma': 'no-cache',                          // HTTP/1.0 캐시 방지 (HTTP/1.0 cache prevention)  
+        'Expires': '0'                                 // 만료 시간 즉시 설정 (Set immediate expiration)
+      });
+    } catch (error) {
+      // 헤더 설정 실패시 로그만 남기고 계속 진행 (Log error and continue on header setting failure)
+      console.warn('Failed to set privacy headers:', error.message);
+    }
+  }
   
   next();
 };

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeraChain 프론트엔드 디버깅 도구</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4a5568;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .debug-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .debug-section h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .form-group input, 
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .result-area {
+            background: #1a202c;
+            color: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .status-indicators {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .status-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            min-width: 150px;
+            margin: 5px;
+        }
+        
+        .status-card.success {
+            border-top: 4px solid #48bb78;
+        }
+        
+        .status-card.error {
+            border-top: 4px solid #f56565;
+        }
+        
+        .status-card.warning {
+            border-top: 4px solid #ed8936;
+        }
+        
+        .quick-tests {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .quick-test-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quick-test-btn:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .status-indicators {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 VeraChain 프론트엔드 디버깅 도구</h1>
+            <p>실제 프론트엔드에서 발생하는 문제를 진단하고 해결합니다</p>
+        </div>
+
+        <!-- 상태 표시기 -->
+        <div class="status-indicators">
+            <div class="status-card" id="backend-status">
+                <h4>백엔드 상태</h4>
+                <p id="backend-text">확인 중...</p>
+            </div>
+            <div class="status-card" id="auth-status">
+                <h4>인증 상태</h4>
+                <p id="auth-text">토큰 없음</p>
+            </div>
+            <div class="status-card" id="api-status">
+                <h4>API 연결</h4>
+                <p id="api-text">확인 중...</p>
+            </div>
+        </div>
+
+        <!-- 빠른 테스트 버튼들 -->
+        <div class="quick-tests">
+            <button class="quick-test-btn" onclick="checkBackendHealth()">
+                ❤️ 백엔드 헬스체크
+            </button>
+            <button class="quick-test-btn" onclick="testCORS()">
+                🌐 CORS 연결 테스트
+            </button>
+            <button class="quick-test-btn" onclick="checkLocalStorage()">
+                💾 로컬스토리지 확인
+            </button>
+            <button class="quick-test-btn" onclick="testAuthFlow()">
+                🔐 인증 플로우 테스트
+            </button>
+            <button class="quick-test-btn" onclick="simulateUserJourney()">
+                🚶 사용자 여정 시뮬레이션
+            </button>
+            <button class="quick-test-btn" onclick="clearAllData()">
+                🧹 모든 데이터 삭제
+            </button>
+        </div>
+
+        <!-- 수동 API 테스트 -->
+        <div class="debug-section">
+            <h3>🔌 수동 API 테스트</h3>
+            
+            <div class="form-group">
+                <label>API 엔드포인트</label>
+                <select id="manual-endpoint">
+                    <option value="/health">GET /api/health</option>
+                    <option value="/test">GET /api/test</option>
+                    <option value="/auth/register">POST /api/auth/register</option>
+                    <option value="/auth/login">POST /api/auth/login</option>
+                    <option value="/auth/me">GET /api/auth/me</option>
+                </select>
+            </div>
+            
+            <div class="form-group" id="request-data-group" style="display: none;">
+                <label>요청 데이터 (JSON)</label>
+                <input type="text" id="request-data" placeholder='{"email": "test@example.com", "password": "password"}'>
+            </div>
+            
+            <button class="btn" onclick="manualAPITest()">API 테스트 실행</button>
+            <button class="btn" onclick="openFrontend()">프론트엔드 열기</button>
+        </div>
+
+        <!-- 회원가입/로그인 테스트 -->
+        <div class="debug-section">
+            <h3>🔐 인증 시스템 테스트</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4>회원가입 테스트</h4>
+                    <div class="form-group">
+                        <label>이름</label>
+                        <input type="text" id="reg-name" value="디버그테스터">
+                    </div>
+                    <div class="form-group">
+                        <label>이메일</label>
+                        <input type="email" id="reg-email" value="debug@verachain.com">
+                    </div>
+                    <div class="form-group">
+                        <label>비밀번호</label>
+                        <input type="password" id="reg-password" value="DebugPassword123!">
+                    </div>
+                    <div class="form-group">
+                        <label>전화번호</label>
+                        <input type="text" id="reg-phone" value="+82-10-9999-8888">
+                    </div>
+                    <button class="btn" onclick="testRegistration()">회원가입 테스트</button>
+                </div>
+                
+                <div>
+                    <h4>로그인 테스트</h4>
+                    <div class="form-group">
+                        <label>이메일</label>
+                        <input type="email" id="login-email" value="debug@verachain.com">
+                    </div>
+                    <div class="form-group">
+                        <label>비밀번호</label>
+                        <input type="password" id="login-password" value="DebugPassword123!">
+                    </div>
+                    <button class="btn" onclick="testLogin()">로그인 테스트</button>
+                    <button class="btn" onclick="testProtectedRoute()">보호된 경로 테스트</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 결과 표시 영역 -->
+        <div class="debug-section">
+            <h3>📄 테스트 결과</h3>
+            <div class="result-area" id="result-area">
+=== VeraChain 프론트엔드 디버깅 도구 ===
+시작 시간: ${new Date().toLocaleString('ko-KR')}
+
+문제 증상:
+1. 회원가입 실패
+2. 로그인 후 다른 화면들이 로그인 화면으로만 표시
+3. 보호된 라우트 접근 불가
+
+진단을 시작하려면 위의 버튼들을 클릭하세요.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 상수 정의
+        const API_BASE = 'https://verachain-backend2.onrender.com/api';
+        const FRONTEND_URL = 'https://verachain-pl.vercel.app';
+        
+        let currentToken = null;
+        let debugResults = {};
+
+        // 로그 함수
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString('ko-KR');
+            const resultArea = document.getElementById('result-area');
+            const emoji = {
+                'info': 'ℹ️',
+                'success': '✅',
+                'error': '❌',
+                'warning': '⚠️'
+            };
+            
+            resultArea.textContent += `\n[${timestamp}] ${emoji[type]} ${message}`;
+            resultArea.scrollTop = resultArea.scrollHeight;
+        }
+
+        // 상태 표시 업데이트
+        function updateStatus(elementId, text, status = 'warning') {
+            const element = document.getElementById(elementId);
+            const textElement = document.getElementById(elementId.replace('-status', '-text'));
+            
+            element.className = `status-card ${status}`;
+            textElement.textContent = text;
+        }
+
+        // API 요청 함수
+        async function makeRequest(endpoint, method = 'GET', data = null, useAuth = false) {
+            const url = `${API_BASE}${endpoint}`;
+            const headers = {
+                'Content-Type': 'application/json',
+                'Origin': FRONTEND_URL
+            };
+            
+            if (useAuth && currentToken) {
+                headers['Authorization'] = `Bearer ${currentToken}`;
+            }
+            
+            const options = {
+                method,
+                headers,
+                credentials: 'include'
+            };
+            
+            if (data && method !== 'GET') {
+                options.body = JSON.stringify(data);
+            }
+            
+            try {
+                log(`API 요청: ${method} ${url}`, 'info');
+                const response = await fetch(url, options);
+                const responseData = await response.json();
+                
+                return {
+                    success: response.ok,
+                    status: response.status,
+                    data: responseData,
+                    headers: Object.fromEntries(response.headers.entries())
+                };
+            } catch (error) {
+                log(`네트워크 오류: ${error.message}`, 'error');
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
+        }
+
+        // 백엔드 상태 확인
+        async function checkBackendHealth() {
+            log('백엔드 헬스체크 시작', 'info');
+            
+            const result = await makeRequest('/health');
+            
+            if (result.success) {
+                updateStatus('backend-status', '정상', 'success');
+                log(`백엔드 정상 동작 (${result.status})`, 'success');
+                log(`환경: ${result.data.environment}`, 'info');
+            } else {
+                updateStatus('backend-status', '오류', 'error');
+                log('백엔드 연결 실패', 'error');
+            }
+            
+            debugResults.backendHealth = result.success;
+        }
+
+        // CORS 테스트
+        async function testCORS() {
+            log('CORS 연결 테스트 시작', 'info');
+            
+            const result = await makeRequest('/test');
+            
+            if (result.success) {
+                updateStatus('api-status', 'CORS 정상', 'success');
+                log('CORS 설정 정상', 'success');
+                log(`Origin: ${result.data.origin}`, 'info');
+            } else {
+                updateStatus('api-status', 'CORS 오류', 'error');
+                log('CORS 연결 실패', 'error');
+            }
+            
+            debugResults.corsTest = result.success;
+        }
+
+        // 로컬스토리지 확인
+        function checkLocalStorage() {
+            log('로컬스토리지 확인 시작', 'info');
+            
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            
+            if (token) {
+                currentToken = token;
+                log(`토큰 발견: ${token.substring(0, 50)}...`, 'success');
+                updateStatus('auth-status', '토큰 있음', 'success');
+                
+                if (user) {
+                    const userData = JSON.parse(user);
+                    log(`사용자 정보: ${userData.name} (${userData.email})`, 'info');
+                }
+            } else {
+                log('저장된 토큰 없음', 'warning');
+                updateStatus('auth-status', '토큰 없음', 'warning');
+            }
+            
+            // 모든 localStorage 항목 표시
+            log('=== 로컬스토리지 전체 내용 ===', 'info');
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+                log(`${key}: ${value.substring(0, 100)}${value.length > 100 ? '...' : ''}`, 'info');
+            }
+            
+            debugResults.hasToken = !!token;
+        }
+
+        // 회원가입 테스트
+        async function testRegistration() {
+            log('회원가입 테스트 시작', 'info');
+            
+            const userData = {
+                name: document.getElementById('reg-name').value,
+                email: document.getElementById('reg-email').value,
+                password: document.getElementById('reg-password').value,
+                phone: document.getElementById('reg-phone').value
+            };
+            
+            const result = await makeRequest('/auth/register', 'POST', userData);
+            
+            if (result.success) {
+                log('회원가입 성공!', 'success');
+                log(`사용자 ID: ${result.data.data._id}`, 'info');
+                log(`토큰: ${result.data.data.token.substring(0, 50)}...`, 'info');
+                
+                // 토큰 저장
+                currentToken = result.data.data.token;
+                localStorage.setItem('token', currentToken);
+                localStorage.setItem('user', JSON.stringify(result.data.data));
+                
+                updateStatus('auth-status', '가입 성공', 'success');
+            } else {
+                log(`회원가입 실패: ${result.data?.message || result.error}`, 'error');
+                updateStatus('auth-status', '가입 실패', 'error');
+            }
+            
+            debugResults.registration = result.success;
+        }
+
+        // 로그인 테스트
+        async function testLogin() {
+            log('로그인 테스트 시작', 'info');
+            
+            const loginData = {
+                email: document.getElementById('login-email').value,
+                password: document.getElementById('login-password').value
+            };
+            
+            const result = await makeRequest('/auth/login', 'POST', loginData);
+            
+            if (result.success) {
+                log('로그인 성공!', 'success');
+                log(`사용자: ${result.data.data.name}`, 'info');
+                
+                // 토큰 저장
+                currentToken = result.data.data.token;
+                localStorage.setItem('token', currentToken);
+                localStorage.setItem('user', JSON.stringify(result.data.data));
+                
+                updateStatus('auth-status', '로그인 성공', 'success');
+            } else {
+                log(`로그인 실패: ${result.data?.message || result.error}`, 'error');
+                updateStatus('auth-status', '로그인 실패', 'error');
+            }
+            
+            debugResults.login = result.success;
+        }
+
+        // 보호된 경로 테스트
+        async function testProtectedRoute() {
+            if (!currentToken) {
+                log('테스트를 위해 먼저 로그인하세요', 'warning');
+                return;
+            }
+            
+            log('보호된 경로 테스트 시작', 'info');
+            
+            const result = await makeRequest('/auth/me', 'GET', null, true);
+            
+            if (result.success) {
+                log('보호된 경로 접근 성공!', 'success');
+                log(`사용자 정보: ${JSON.stringify(result.data.data, null, 2)}`, 'info');
+                updateStatus('auth-status', '인증 성공', 'success');
+            } else {
+                log(`보호된 경로 접근 실패: ${result.data?.message || result.error}`, 'error');
+                log('JWT 토큰 검증에 문제가 있을 수 있습니다', 'warning');
+                updateStatus('auth-status', '인증 실패', 'error');
+            }
+            
+            debugResults.protectedRoute = result.success;
+        }
+
+        // 수동 API 테스트
+        async function manualAPITest() {
+            const endpoint = document.getElementById('manual-endpoint').value;
+            const requestData = document.getElementById('request-data').value;
+            
+            let method = 'GET';
+            let data = null;
+            
+            if (endpoint.includes('register') || endpoint.includes('login')) {
+                method = 'POST';
+                if (requestData) {
+                    try {
+                        data = JSON.parse(requestData);
+                    } catch (e) {
+                        log('JSON 파싱 오류: ' + e.message, 'error');
+                        return;
+                    }
+                }
+            }
+            
+            const useAuth = endpoint === '/auth/me';
+            const result = await makeRequest(endpoint, method, data, useAuth);
+            
+            log(`=== ${method} ${endpoint} 결과 ===`, 'info');
+            log(`상태: ${result.status}`, 'info');
+            log(`응답: ${JSON.stringify(result.data, null, 2)}`, 'info');
+        }
+
+        // 사용자 여정 시뮬레이션
+        async function simulateUserJourney() {
+            log('=== 전체 사용자 여정 시뮬레이션 시작 ===', 'info');
+            
+            // 1. 백엔드 상태 확인
+            await checkBackendHealth();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // 2. CORS 테스트
+            await testCORS();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // 3. 로컬스토리지 확인
+            checkLocalStorage();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // 4. 회원가입 테스트
+            await testRegistration();
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // 5. 보호된 경로 테스트
+            await testProtectedRoute();
+            
+            // 결과 요약
+            log('=== 시뮬레이션 완료 ===', 'info');
+            log('결과 요약:', 'info');
+            log(`- 백엔드: ${debugResults.backendHealth ? '✅' : '❌'}`, 'info');
+            log(`- CORS: ${debugResults.corsTest ? '✅' : '❌'}`, 'info');
+            log(`- 회원가입: ${debugResults.registration ? '✅' : '❌'}`, 'info');
+            log(`- 보호된 경로: ${debugResults.protectedRoute ? '✅' : '❌'}`, 'info');
+            
+            if (!debugResults.protectedRoute && debugResults.registration) {
+                log('🔧 진단: JWT 토큰이 생성되지만 검증에 실패합니다', 'warning');
+                log('   해결책: 백엔드의 JWT 인증 미들웨어를 확인하세요', 'warning');
+            }
+        }
+
+        // 프론트엔드 열기
+        function openFrontend() {
+            window.open(FRONTEND_URL, '_blank');
+            log('VeraChain 프론트엔드를 새 탭에서 열었습니다', 'info');
+        }
+
+        // 모든 데이터 삭제
+        function clearAllData() {
+            localStorage.clear();
+            currentToken = null;
+            debugResults = {};
+            
+            updateStatus('auth-status', '토큰 없음', 'warning');
+            updateStatus('api-status', '확인 필요', 'warning');
+            
+            log('모든 로컬 데이터가 삭제되었습니다', 'info');
+        }
+
+        // 엔드포인트 변경 시 요청 데이터 필드 표시/숨김
+        document.getElementById('manual-endpoint').addEventListener('change', function(e) {
+            const endpoint = e.target.value;
+            const requestDataGroup = document.getElementById('request-data-group');
+            
+            if (endpoint.includes('register') || endpoint.includes('login')) {
+                requestDataGroup.style.display = 'block';
+                if (endpoint.includes('register')) {
+                    document.getElementById('request-data').value = '{"name":"테스터","email":"test@example.com","password":"Test123!","phone":"+82-10-1234-5678"}';
+                } else {
+                    document.getElementById('request-data').value = '{"email":"test@example.com","password":"Test123!"}';
+                }
+            } else {
+                requestDataGroup.style.display = 'none';
+            }
+        });
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            log('디버깅 도구 로드 완료', 'success');
+            
+            // 자동으로 기본 상태 확인
+            setTimeout(() => {
+                checkBackendHealth();
+                testCORS();
+                checkLocalStorage();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

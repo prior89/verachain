@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeraChain Mobile Complete Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+        }
+        button {
+            background-color: #8B5CF6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #7C3AED;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .success { background-color: #166534; }
+        .error { background-color: #991b1b; }
+        .info { background-color: #1e40af; }
+        input, textarea {
+            background-color: #374151;
+            color: white;
+            border: 1px solid #6b7280;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 VeraChain Mobile Complete Functionality Test</h1>
+    <p>최신 모바일 앱: <a href="https://verachain-46rrad9qh-prior89s-projects.vercel.app" target="_blank">verachain-46rrad9qh</a></p>
+
+    <!-- API 연결 테스트 -->
+    <div class="test-section">
+        <h2>🔌 API 연결 테스트</h2>
+        <button onclick="testAPI()">API 연결 테스트</button>
+        <div id="apiResult" class="result"></div>
+    </div>
+
+    <!-- 회원가입 테스트 -->
+    <div class="test-section">
+        <h2>👤 회원가입 테스트</h2>
+        <input type="email" id="registerEmail" placeholder="이메일" />
+        <input type="password" id="registerPassword" placeholder="비밀번호" />
+        <input type="text" id="registerName" placeholder="이름" />
+        <button onclick="testRegister()">회원가입</button>
+        <div id="registerResult" class="result"></div>
+    </div>
+
+    <!-- 로그인 테스트 -->
+    <div class="test-section">
+        <h2>🔐 로그인 테스트</h2>
+        <input type="email" id="loginEmail" placeholder="이메일" />
+        <input type="password" id="loginPassword" placeholder="비밀번호" />
+        <button onclick="testLogin()">로그인</button>
+        <div id="loginResult" class="result"></div>
+    </div>
+
+    <!-- 전체 테스트 -->
+    <div class="test-section">
+        <h2>🎯 전체 테스트</h2>
+        <button onclick="runAllTests()">모든 테스트 실행</button>
+        <div id="allTestsResult" class="result"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://verachain-backend2.onrender.com/api';
+        let authToken = null;
+
+        async function makeRequest(url, options = {}) {
+            try {
+                const defaultOptions = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    credentials: 'include'
+                };
+
+                if (authToken) {
+                    defaultOptions.headers['Authorization'] = `Bearer ${authToken}`;
+                }
+
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                const data = await response.text();
+                
+                let jsonData;
+                try {
+                    jsonData = JSON.parse(data);
+                } catch {
+                    jsonData = { rawResponse: data };
+                }
+
+                return {
+                    ok: response.ok,
+                    status: response.status,
+                    data: jsonData,
+                    headers: Object.fromEntries(response.headers.entries())
+                };
+            } catch (error) {
+                return {
+                    ok: false,
+                    error: error.message,
+                    data: null
+                };
+            }
+        }
+
+        function displayResult(elementId, result, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.className = `result ${type}`;
+            element.textContent = JSON.stringify(result, null, 2);
+        }
+
+        async function testAPI() {
+            displayResult('apiResult', '테스트 중...', 'info');
+            
+            const result = await makeRequest(`${API_BASE}/test`);
+            
+            if (result.ok) {
+                displayResult('apiResult', {
+                    status: 'SUCCESS',
+                    response: result.data,
+                    headers: result.headers
+                }, 'success');
+            } else {
+                displayResult('apiResult', {
+                    status: 'FAILED',
+                    error: result.error || result.data,
+                    statusCode: result.status
+                }, 'error');
+            }
+        }
+
+        async function testRegister() {
+            const email = document.getElementById('registerEmail').value || `test_${Date.now()}@mobile.test`;
+            const password = document.getElementById('registerPassword').value || 'Mobile123!';
+            const name = document.getElementById('registerName').value || 'Mobile Test User';
+            
+            document.getElementById('registerEmail').value = email;
+            document.getElementById('registerPassword').value = password;
+            document.getElementById('registerName').value = name;
+            document.getElementById('loginEmail').value = email;
+            document.getElementById('loginPassword').value = password;
+
+            displayResult('registerResult', '회원가입 중...', 'info');
+            
+            const result = await makeRequest(`${API_BASE}/auth/register`, {
+                method: 'POST',
+                body: JSON.stringify({ email, password, name })
+            });
+            
+            if (result.ok) {
+                displayResult('registerResult', {
+                    status: 'SUCCESS',
+                    message: '회원가입 성공',
+                    data: result.data
+                }, 'success');
+            } else {
+                displayResult('registerResult', {
+                    status: 'FAILED',
+                    error: result.data,
+                    statusCode: result.status
+                }, 'error');
+            }
+        }
+
+        async function testLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!email || !password) {
+                displayResult('loginResult', { error: '이메일과 비밀번호를 입력하세요' }, 'error');
+                return;
+            }
+
+            displayResult('loginResult', '로그인 중...', 'info');
+            
+            const result = await makeRequest(`${API_BASE}/auth/login`, {
+                method: 'POST',
+                body: JSON.stringify({ email, password })
+            });
+            
+            if (result.ok && result.data.token) {
+                authToken = result.data.token;
+                displayResult('loginResult', {
+                    status: 'SUCCESS',
+                    message: '로그인 성공',
+                    token: authToken.substring(0, 20) + '...',
+                    data: result.data
+                }, 'success');
+            } else {
+                displayResult('loginResult', {
+                    status: 'FAILED',
+                    error: result.data,
+                    statusCode: result.status
+                }, 'error');
+            }
+        }
+
+        async function runAllTests() {
+            displayResult('allTestsResult', '전체 테스트 실행 중...', 'info');
+            
+            const results = [];
+            
+            // 1. API 연결 테스트
+            results.push('1. API 연결 테스트');
+            const apiTest = await makeRequest(`${API_BASE}/test`);
+            results.push(`   ${apiTest.ok ? '✅' : '❌'} 연결: ${apiTest.ok ? 'SUCCESS' : 'FAILED'}`);
+            
+            // 2. 회원가입 테스트
+            results.push('2. 회원가입 테스트');
+            const email = `test_${Date.now()}@mobile.test`;
+            const registerTest = await makeRequest(`${API_BASE}/auth/register`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    email,
+                    password: 'Mobile123!',
+                    name: 'Test User'
+                })
+            });
+            results.push(`   ${registerTest.ok ? '✅' : '❌'} 회원가입: ${registerTest.ok ? 'SUCCESS' : registerTest.data?.message || 'FAILED'}`);
+            
+            // 3. 로그인 테스트
+            if (registerTest.ok) {
+                results.push('3. 로그인 테스트');
+                const loginTest = await makeRequest(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        email,
+                        password: 'Mobile123!'
+                    })
+                });
+                results.push(`   ${loginTest.ok ? '✅' : '❌'} 로그인: ${loginTest.ok ? 'SUCCESS' : loginTest.data?.message || 'FAILED'}`);
+                
+                if (loginTest.ok && loginTest.data.token) {
+                    authToken = loginTest.data.token;
+                    
+                    // 4. 인증 API 테스트
+                    results.push('4. 인증 API 테스트');
+                    const authTest = await makeRequest(`${API_BASE}/auth/profile`);
+                    results.push(`   ${authTest.ok ? '✅' : '❌'} 프로필: ${authTest.ok ? 'SUCCESS' : 'FAILED'}`);
+                }
+            }
+            
+            displayResult('allTestsResult', results.join('\n'), 'info');
+        }
+
+        // 페이지 로드 시 자동으로 API 테스트 실행
+        window.onload = () => {
+            testAPI();
+        };
+    </script>
+</body>
+</html>
