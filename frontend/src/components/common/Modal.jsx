@@ -52,7 +52,7 @@ const Modal = ({
             {title && <h2 className="modal-title">{title}</h2>}
             {showCloseButton && (
               <button className="modal-close" onClick={onClose}>
-                <X size={24} />
+                [X]
               </button>
             )}
           </div>
@@ -78,3 +78,4 @@ const Modal = ({
 };
 
 export default Modal;
+

@@ -119,3 +119,4 @@ export const ScanProvider = ({ children }) => {
     </ScanContext.Provider>
   );
 };
+

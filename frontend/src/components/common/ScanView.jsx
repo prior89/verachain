@@ -1,16 +1,6 @@
 ﻿import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Webcam from 'react-webcam';
-import { 
-  Camera, 
-  CameraOff, 
-  CheckCircle, 
-  XCircle, 
-  Loader2, 
-  Scan,
-  Package,
-  FileText
-} from 'lucide-react';
 import './ScanView.css';
 
 const SCAN_STATES = {
@@ -180,17 +170,17 @@ const ScanView = ({ onScanComplete, onError }) => {
       case SCAN_STATES.SCANNING_PRODUCT:
         return <Package className="status-icon scanning" />;
       case SCAN_STATES.PRODUCT_VERIFIED:
-        return <CheckCircle className="status-icon success" />;
+        return [✓];
       case SCAN_STATES.PRODUCT_FAILED:
-        return <XCircle className="status-icon error" />;
+        return [X];
       case SCAN_STATES.SCANNING_CERTIFICATE:
         return <FileText className="status-icon scanning" />;
       case SCAN_STATES.CERTIFICATE_VERIFIED:
-        return <CheckCircle className="status-icon success" />;
+        return [✓];
       case SCAN_STATES.CERTIFICATE_FAILED:
-        return <XCircle className="status-icon error" />;
+        return [X];
       case SCAN_STATES.COMPLETE:
-        return <CheckCircle className="status-icon complete" />;
+        return [✓];
       default:
         return <Scan className="status-icon" />;
     }
@@ -435,3 +425,4 @@ const ScanView = ({ onScanComplete, onError }) => {
 };
 
 export default ScanView;
+

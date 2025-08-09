@@ -10,7 +10,7 @@ const ScanOverlay = ({
   const getStateIcon = () => {
     switch (state) {
       case 'success':
-        return <Check size={48} className="state-icon success" />;
+        return [✓];
       case 'error':
         return <AlertCircle size={48} className="state-icon error" />;
       default:
@@ -98,3 +98,4 @@ const ScanOverlay = ({
 };
 
 export default ScanOverlay;
+

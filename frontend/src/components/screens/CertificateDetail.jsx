@@ -50,7 +50,7 @@ const CertificateDetail = () => {
               </div>
               
               <div className="verified-badge">
-                <Shield size={20} />
+                [Shield]
                 <span>VERIFIED</span>
               </div>
               
@@ -103,3 +103,4 @@ const CertificateDetail = () => {
 };
 
 export default CertificateDetail;
+

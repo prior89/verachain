@@ -18,7 +18,7 @@ const NFTCard = ({ certificate }) => {
               {certificate.brand}
             </div>
             <div className="verified-badge">
-              <Shield size={20} />
+              [Shield]
               VERIFIED
             </div>
           </div>
@@ -83,3 +83,4 @@ const NFTCard = ({ certificate }) => {
 };
 
 export default NFTCard;
+

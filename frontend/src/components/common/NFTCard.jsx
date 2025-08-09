@@ -106,7 +106,7 @@ const NFTCard = ({ certificate, onClick }) => {
             animate={{ scale: 1 }}
             transition={{ delay: 0.3, type: "spring" }}
           >
-            <Shield size={16} />
+            [Shield]
             <span>VERIFIED</span>
           </motion.div>
         </div>
@@ -313,3 +313,4 @@ const NFTCard = ({ certificate, onClick }) => {
 };
 
 export default NFTCard;
+

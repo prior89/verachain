@@ -131,3 +131,4 @@ const CameraView = ({
 };
 
 export default CameraView;
+

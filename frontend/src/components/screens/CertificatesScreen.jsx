@@ -157,7 +157,7 @@ const CertificatesScreen = () => {
         </button>
         
         <h1 className="screen-title">
-          <Shield className="title-icon" />
+          [Shield]
           My Certificates
         </h1>
         
@@ -167,7 +167,7 @@ const CertificatesScreen = () => {
           animate={isRefreshing ? { rotate: 360 } : {}}
           transition={{ duration: 1, ease: "linear" }}
         >
-          <RefreshCw size={20} />
+          [Refresh]
         </motion.button>
       </div>
 
@@ -191,7 +191,7 @@ const CertificatesScreen = () => {
       <div className="controls-bar">
         {/* Search */}
         <div className="search-box">
-          <Search size={18} />
+          [Search]
           <input
             type="text"
             placeholder="Search certificates..."
@@ -202,7 +202,7 @@ const CertificatesScreen = () => {
 
         {/* Brand Filter */}
         <div className="filter-dropdown">
-          <Filter size={18} />
+          [Filter]
           <select 
             value={filterBrand} 
             onChange={(e) => setFilterBrand(e.target.value)}
@@ -221,13 +221,13 @@ const CertificatesScreen = () => {
             className={viewMode === 'grid' ? 'active' : ''}
             onClick={() => setViewMode('grid')}
           >
-            <Grid size={18} />
+            [Grid]
           </button>
           <button 
             className={viewMode === 'list' ? 'active' : ''}
             onClick={() => setViewMode('list')}
           >
-            <List size={18} />
+            [List]
           </button>
         </div>
       </div>
@@ -250,7 +250,7 @@ const CertificatesScreen = () => {
         </div>
       ) : filteredCertificates.length === 0 ? (
         <div className="empty-state">
-          <Shield size={64} />
+          [Shield]
           <h3>No Certificates Found</h3>
           <p>Start by scanning a product to create your first certificate</p>
           <button onClick={() => navigate('/scan')} className="scan-button">
@@ -302,7 +302,7 @@ const CertificatesScreen = () => {
                           }}
                           className="action-btn qr"
                         >
-                          <QrCode size={16} />
+                          [QR]
                         </button>
                         <button 
                           onClick={(e) => {
@@ -311,7 +311,7 @@ const CertificatesScreen = () => {
                           }}
                           className="action-btn transfer"
                         >
-                          <Send size={16} />
+                          [Send]
                         </button>
                         <button 
                           onClick={(e) => {
@@ -320,7 +320,7 @@ const CertificatesScreen = () => {
                           }}
                           className="action-btn burn"
                         >
-                          <Flame size={16} />
+                          [Burn]
                         </button>
                       </div>
                     </div>
@@ -352,11 +352,11 @@ const CertificatesScreen = () => {
               <NFTCard certificate={selectedCert} />
               <div className="modal-actions">
                 <button onClick={() => handleGenerateQR(selectedCert)}>
-                  <QrCode size={20} />
+                  [QR]
                   Generate QR
                 </button>
                 <button onClick={() => handleTransfer(selectedCert.tokenId)}>
-                  <Send size={20} />
+                  [Send]
                   Transfer
                 </button>
                 <button onClick={() => setSelectedCert(null)}>Close</button>
@@ -370,3 +370,5 @@ const CertificatesScreen = () => {
 };
 
 export default CertificatesScreen;
+
+

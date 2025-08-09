@@ -117,3 +117,4 @@ const ScanScreen = () => {
 };
 
 export default ScanScreen;
+
