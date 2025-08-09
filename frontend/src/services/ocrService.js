@@ -1,4 +1,4 @@
-﻿import api from './api';
+import api from './api';
 
 const ocrService = {
   async extractText(imageBase64, language = 'eng') {

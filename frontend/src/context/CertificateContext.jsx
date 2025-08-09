@@ -1,4 +1,4 @@
-﻿import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { nftService } from '../services/nftService';
 import { useAuth } from './AuthContext';
 

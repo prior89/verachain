@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import Header from './Header';
 import BottomNav from './BottomNav';
 import './Layout.css';

@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import './NFTCard.css';
 
 const NFTCard = ({ certificate }) => {
