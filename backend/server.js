@@ -2,7 +2,6 @@
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
-
 dotenv.config();
 
 const connectDB = require('./src/config/database');
@@ -29,7 +28,49 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// Apply comprehensive security middleware
+// CORS 설정
+const corsOptions = {
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://verachain-pl.vercel.app',
+      'https://verachain.vercel.app',
+      'https://verachain-app.vercel.app'
+    ];
+    
+    // Vercel 도메인 자동 허용
+    if (origin && origin.match(/https:\/\/.*\.vercel\.app$/)) {
+      return callback(null, true);
+    }
+    
+    // 개발 환경 localhost 허용
+    if (!origin || origin.includes('localhost') || origin.includes('127.0.0.1')) {
+      return callback(null, true);
+    }
+    
+    // 허용 목록 체크
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('CORS blocked:', origin);
+      callback(null, true); // 테스트용 - 모두 허용
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+
+// Body parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Apply security middleware
 applySecurity(app);
 
 // Apply privacy protection middleware
