@@ -15,7 +15,22 @@
       "Bash(git add:*)",
       "Bash(rm:*)",
       "Bash(git push:*)",
-      "Bash(npx @react-native-community/cli@latest init:*)"
+      "Bash(npx @react-native-community/cli@latest init:*)",
+      "Bash(node:*)",
+      "Bash(git fetch:*)",
+      "Bash(npm --version)",
+      "Bash(gh:*)",
+      "Bash(npx react-native:*)",
+      "Bash(npm audit:*)",
+      "Bash(npm start)",
+      "WebFetch(domain:vercel.com)",
+      "Bash(timeout:*)",
+      "Bash(tasklist:*)",
+      "Bash(set PORT=5002)",
+      "Bash(cross-env:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(git rm:*)"
     ],
     "deny": []
   }

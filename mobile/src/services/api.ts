@@ -1,8 +1,10 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// API 기본 URL - 실제 백엔드 URL로 교체 필요
-const API_BASE_URL = 'http://localhost:5000/api';
+// API 기본 URL - 환경에 따라 자동 설정
+const API_BASE_URL = __DEV__ 
+  ? 'http://localhost:5002/api'  // 개발 환경
+  : 'https://your-production-api.com/api';  // 프로덕션 환경
 
 // axios 인스턴스 생성
 const api = axios.create({
