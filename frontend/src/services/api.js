@@ -4,8 +4,14 @@ const API_URL = process.env.REACT_APP_API_URL || 'https://verachain-backend2.onr
 
 const api = axios.create({
   baseURL: API_URL,
+  timeout: 30000,
+  withCredentials: true,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS,PATCH',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With'
   }
 });
 

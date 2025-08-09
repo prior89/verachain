@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const memoryDB = require('../database/memoryDB');
+
+let useMemoryDB = false;
 
 const connectDB = async () => {
   try {
@@ -7,25 +10,31 @@ const connectDB = async () => {
     const conn = await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 15000,
-      socketTimeoutMS: 30000,
-      connectTimeoutMS: 15000,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 10000,
+      connectTimeoutMS: 5000,
       maxPoolSize: 10,
       minPoolSize: 1
     });
 
+    useMemoryDB = false;
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     console.log(`🗄️ Database: ${conn.connection.name}`);
   } catch (error) {
-    console.error(`❌ MongoDB Connection Error: ${error.message}`);
-    console.error('🔍 MongoDB URI:', process.env.MONGODB_URI ? 'Set' : 'Not set');
-    
-    // 재시도 로직
-    setTimeout(() => {
-      console.log('🔄 Retrying MongoDB connection...');
-      connectDB();
-    }, 5000);
+    console.error(`❌ MongoDB Connection Failed: ${error.message}`);
+    console.log('🔄 Switching to in-memory database for development...');
+    useMemoryDB = true;
+    console.log('✅ In-Memory Database Active');
   }
 };
 
-module.exports = connectDB;
+// Database abstraction layer
+const getDB = () => {
+  return {
+    isMemoryDB: useMemoryDB,
+    memoryDB: useMemoryDB ? memoryDB : null,
+    mongoose: !useMemoryDB ? mongoose : null
+  };
+};
+
+module.exports = { connectDB, getDB };

@@ -8,7 +8,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: MONGODB_URI
-        value: mongodb+srv://verachain:verachain2025@cluster0.w7b8j.mongodb.net/verachain?retryWrites=true&w=majority
+        value: mongodb://127.0.0.1:27017/verachain
       - key: JWT_SECRET
         value: verachain-jwt-secret-2025-production
       - key: PORT

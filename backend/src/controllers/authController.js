@@ -1,26 +1,58 @@
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
+const { getDB } = require('../config/database');
+const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
 const register = async (req, res, next) => {
   try {
     const { name, email, password, phone } = req.body;
+    const db = getDB();
 
-    const userExists = await User.findOne({ email });
+    let userExists;
+    let user;
 
-    if (userExists) {
-      return res.status(400).json({
-        success: false,
-        message: 'User already exists with this email'
+    if (db.isMemoryDB) {
+      // Using in-memory database
+      userExists = await db.memoryDB.findUserByEmail(email);
+      
+      if (userExists) {
+        return res.status(400).json({
+          success: false,
+          message: 'User already exists with this email'
+        });
+      }
+
+      // Hash password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      user = await db.memoryDB.createUser({
+        name,
+        email,
+        password: hashedPassword,
+        phone,
+        membershipTier: 'basic',
+        isVerified: false
+      });
+    } else {
+      // Using MongoDB
+      userExists = await User.findOne({ email });
+
+      if (userExists) {
+        return res.status(400).json({
+          success: false,
+          message: 'User already exists with this email'
+        });
+      }
+
+      user = await User.create({
+        name,
+        email,
+        password,
+        phone
       });
     }
-
-    const user = await User.create({
-      name,
-      email,
-      password,
-      phone
-    });
 
     const token = generateToken(user._id);
 
@@ -30,8 +62,8 @@ const register = async (req, res, next) => {
         _id: user._id.toString(),
         name: user.name,
         email: user.email,
-        membershipTier: user.membershipTier,
-        isVerified: user.isVerified,
+        membershipTier: user.membershipTier || 'basic',
+        isVerified: user.isVerified || false,
         token
       }
     });
@@ -43,30 +75,45 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     console.log('Login request body:', req.body);
-    console.log('Login request headers:', req.headers);
     const { email, password } = req.body;
-
-    console.log('Extracted email:', email);
-    console.log('Extracted password:', password ? 'YES' : 'NO');
+    const db = getDB();
 
     if (!email || !password) {
-      console.log('Missing email or password');
       return res.status(400).json({
         success: false,
         message: 'Please provide email and password'
       });
     }
 
-    const user = await User.findOne({ email }).select('+password');
+    let user;
+    let isPasswordMatch = false;
 
-    if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: 'Invalid credentials'
-      });
+    if (db.isMemoryDB) {
+      // Using in-memory database
+      user = await db.memoryDB.findUserByEmail(email);
+      
+      if (!user) {
+        return res.status(401).json({
+          success: false,
+          message: 'Invalid credentials'
+        });
+      }
+
+      // Compare password
+      isPasswordMatch = await bcrypt.compare(password, user.password);
+    } else {
+      // Using MongoDB
+      user = await User.findOne({ email }).select('+password');
+
+      if (!user) {
+        return res.status(401).json({
+          success: false,
+          message: 'Invalid credentials'
+        });
+      }
+
+      isPasswordMatch = await user.matchPassword(password);
     }
-
-    const isPasswordMatch = await user.matchPassword(password);
 
     if (!isPasswordMatch) {
       return res.status(401).json({

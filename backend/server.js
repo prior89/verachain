@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 dotenv.config();
 
-const connectDB = require('./src/config/database');
+const { connectDB } = require('./src/config/database');
 const errorHandler = require('./src/middleware/errorHandler');
 const { applySecurity } = require('./src/middleware/securityMiddleware');
 const { 

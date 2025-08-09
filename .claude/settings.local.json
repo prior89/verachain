@@ -52,7 +52,10 @@
       "Bash(touch:*)",
       "Bash(start C:UsersVeraChainquick-test.html)",
       "Bash(start \"C:\\Users\\VeraChain\\quick-test.html\")",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "WebFetch(domain:verachain-8nrdsq1mg-prior89s-projects.vercel.app)",
+      "Bash(start \"C:\\Users\\VeraChain\\api-connection-test.html\")",
+      "Bash(start cors-test.html)"
     ],
     "deny": []
   }
