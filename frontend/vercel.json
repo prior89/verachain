@@ -1,14 +1,10 @@
-{
+﻿{
   "build": {
     "env": {
-      "CI": "false",
-      "SKIP_PREFLIGHT_CHECK": "true"
+      "CI": "false"
     }
   },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
+  "framework": "create-react-app",
+  "buildCommand": "npm run build",
+  "outputDirectory": "build"
 }
