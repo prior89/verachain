@@ -9,6 +9,7 @@
     "dev": "nodemon server.js",
     "dev:fastify": "nodemon server.fastify.js",
     "seed": "node src/seeders/sampleData.js",
+    "seed:authentic": "node src/seeders/authenticProducts.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "test": "jest --coverage",

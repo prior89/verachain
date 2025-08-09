@@ -30,7 +30,12 @@
       "Bash(cross-env:*)",
       "Bash(grep:*)",
       "Bash(find:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(tasklist)",
+      "Bash(npm run seed:authentic:*)",
+      "Bash(npx serve:*)",
+      "WebFetch(domain:verachain-pl.vercel.app)",
+      "Bash(start http://localhost:3001)"
     ],
     "deny": []
   }

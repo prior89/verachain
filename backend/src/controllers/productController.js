@@ -55,7 +55,8 @@ const getProducts = async (req, res, next) => {
       .populate('owner', 'username email')
       .limit(limit * 1)
       .skip(skip)
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean(); // Convert to plain JavaScript objects
 
     const count = await Product.countDocuments(query);
 
