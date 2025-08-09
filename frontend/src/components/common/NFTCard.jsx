@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Hash, Cpu, Network, Award, Calendar, Sparkles } from 'lucide-react';
+import { Shield, Hash, Cpu, Network, Award, Calendar } from 'lucide-react';
 import './NFTCard.css';
 
 const NFTCard = ({ certificate, onClick }) => {
@@ -98,7 +98,6 @@ const NFTCard = ({ certificate, onClick }) => {
             initial="initial"
             animate="animate"
           >
-            <Sparkles className="brand-icon" size={24} />
             <span className="brand-name">{certificate.brand}</span>
           </motion.div>
           

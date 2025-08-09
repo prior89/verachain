@@ -1,19 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowLeft, 
-  Shield, 
-  Sparkles, 
-  QrCode,
-  Send,
-  Flame,
-  Filter,
-  Search,
-  Grid,
-  List,
-  RefreshCw
-} from 'lucide-react';
+// All icons removed per CLAUDE.md specifications
 import NFTCard from '../common/NFTCard';
 import { nftService } from '../../services/nftService';
 import './CertificatesScreen.css';
@@ -165,7 +153,7 @@ const CertificatesScreen = () => {
       {/* Header */}
       <div className="certificates-header">
         <button className="back-button" onClick={() => navigate(-1)}>
-          <ArrowLeft size={24} />
+          <span className="back-text">←</span>
         </button>
         
         <h1 className="screen-title">
@@ -251,7 +239,7 @@ const CertificatesScreen = () => {
             animate={{ rotate: 360 }}
             transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
           >
-            <Sparkles size={48} />
+            Loading...
           </motion.div>
           <p>Loading certificates...</p>
         </div>
@@ -293,7 +281,6 @@ const CertificatesScreen = () => {
                   <div className="list-item" onClick={() => handleCertificateClick(cert)}>
                     <div className="list-item-left">
                       <div className="brand-badge">
-                        <Sparkles size={20} />
                         <span>{cert.brand}</span>
                       </div>
                       <div className="item-details">

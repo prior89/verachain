@@ -9,8 +9,7 @@ import {
   Loader2, 
   Scan,
   Package,
-  FileText,
-  Sparkles
+  FileText
 } from 'lucide-react';
 import './ScanView.css';
 
@@ -191,7 +190,7 @@ const ScanView = ({ onScanComplete, onError }) => {
       case SCAN_STATES.CERTIFICATE_FAILED:
         return <XCircle className="status-icon error" />;
       case SCAN_STATES.COMPLETE:
-        return <Sparkles className="status-icon complete" />;
+        return <CheckCircle className="status-icon complete" />;
       default:
         return <Scan className="status-icon" />;
     }
