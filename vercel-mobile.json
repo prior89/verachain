@@ -1,0 +1,31 @@
+{
+  "name": "verachain-mobile",
+  "version": 2,
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "headers": { "cache-control": "s-maxage=31536000,immutable" },
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "REACT_APP_API_URL": "https://verachain-backend2.onrender.com",
+    "REACT_APP_MOBILE_VERSION": "true"
+  },
+  "regions": ["icn1"],
+  "framework": "create-react-app"
+}

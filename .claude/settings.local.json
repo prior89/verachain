@@ -51,7 +51,8 @@
       "Bash(start http://localhost:3001/login)",
       "Bash(touch:*)",
       "Bash(start C:UsersVeraChainquick-test.html)",
-      "Bash(start \"C:\\Users\\VeraChain\\quick-test.html\")"
+      "Bash(start \"C:\\Users\\VeraChain\\quick-test.html\")",
+      "Bash(cp:*)"
     ],
     "deny": []
   }
