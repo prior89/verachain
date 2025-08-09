@@ -151,6 +151,7 @@ describe('Privacy Utils', () => {
     });
 
     test('removes javascript: protocol', () => {
+      // eslint-disable-next-line no-script-url
       const input = 'Click <a href="javascript:alert(1)">here</a>';
       const sanitized = sanitizeInput(input);
       expect(sanitized).not.toContain('javascript:');

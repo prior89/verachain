@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import productService from '../../services/productService';
 import { toast } from 'react-toastify';
@@ -22,7 +21,6 @@ const HomeScreen = () => {
   });
 
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (activeTab === 'my-products') {

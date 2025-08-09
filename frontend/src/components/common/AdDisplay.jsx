@@ -168,7 +168,7 @@ const AdDisplay = ({
             transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
             className="placeholder-logo"
           >
-            <Sparkles size={48} />
+            <span className="logo-text">V</span>
           </motion.div>
           <p>VeraChain</p>
           <span>Luxury Authentication Redefined</span>

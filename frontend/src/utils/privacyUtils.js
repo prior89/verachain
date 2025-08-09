@@ -239,6 +239,8 @@ export const initializePrivacy = () => {
   
   // Set privacy headers
   if (window.navigator && 'sendBeacon' in window.navigator) {
+    // Store original for potential restoration
+    // eslint-disable-next-line no-unused-vars
     const originalSendBeacon = window.navigator.sendBeacon;
     window.navigator.sendBeacon = () => false;
   }
@@ -265,7 +267,7 @@ export const initializePrivacy = () => {
   setInterval(clearSensitiveData, 5 * 60 * 1000); // Every 5 minutes
 };
 
-export default {
+const privacyUtils = {
   generateFreshId,
   sanitizeCertificate,
   sanitizeNFT,
@@ -281,3 +283,5 @@ export default {
   preventScreenshots,
   initializePrivacy
 };
+
+export default privacyUtils;

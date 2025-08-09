@@ -1,9 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Info, Shield, Award } from 'lucide-react';
 import ScanView from '../components/common/ScanView';
-import { verifyProduct, verifyCertificate } from '../services/verificationService';
 import { mintNFT } from '../services/nftService';
 import './ScanScreen.css';
 
@@ -73,7 +71,7 @@ const ScanScreen = () => {
       {/* Header */}
       <div className="scan-header">
         <button className="back-button" onClick={handleBack}>
-          <ArrowLeft size={24} />
+          <span className="back-text">←</span>
         </button>
         
         <h1 className="screen-title">Authenticate</h1>
@@ -82,7 +80,7 @@ const ScanScreen = () => {
           className="info-button"
           onClick={() => setShowInfo(!showInfo)}
         >
-          <Info size={24} />
+          <span className="info-text">?</span>
         </button>
       </div>
 
@@ -164,7 +162,7 @@ const ScanScreen = () => {
                 transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
                 className="loading-spinner"
               >
-                <Shield size={48} />
+                <span className="loading-text">🔒</span>
               </motion.div>
               <p>Creating your certificate...</p>
             </div>
@@ -180,12 +178,12 @@ const ScanScreen = () => {
           animate={{ opacity: 1 }}
         >
           <div className={`indicator ${scanResult.product ? 'complete' : ''}`}>
-            <Shield size={20} />
+            <span className="indicator-symbol">P</span>
             <span>Product</span>
           </div>
           <div className="indicator-line" />
           <div className={`indicator ${scanResult.certificate ? 'complete' : ''}`}>
-            <Award size={20} />
+            <span className="indicator-symbol">C</span>
             <span>Certificate</span>
           </div>
         </motion.div>

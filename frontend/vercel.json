@@ -1,0 +1,14 @@
+{
+  "build": {
+    "env": {
+      "CI": "false",
+      "SKIP_PREFLIGHT_CHECK": "true"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
