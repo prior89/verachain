@@ -28,42 +28,9 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// CORS 설정 - 모든 Vercel 도메인 허용 및 강화된 헤더 지원
+// CORS 설정 - 모든 도메인 허용 (모바일 앱 지원)
 const corsOptions = {
-  origin: function (origin, callback) {
-    console.log('CORS Origin:', origin);
-    
-    // 개발 환경에서는 모두 허용
-    if (process.env.NODE_ENV === 'development') {
-      return callback(null, true);
-    }
-    
-    // Vercel 도메인 모두 허용 (.vercel.app으로 끝나는 모든 도메인)
-    if (origin && origin.match(/https:\/\/.*\.vercel\.app$/)) {
-      console.log('Vercel domain allowed:', origin);
-      return callback(null, true);
-    }
-    
-    // 개발 환경 localhost 허용
-    if (!origin || origin.includes('localhost') || origin.includes('127.0.0.1')) {
-      return callback(null, true);
-    }
-    
-    const allowedOrigins = [
-      'https://verachain-pl.vercel.app',
-      'https://verachain.vercel.app',
-      'https://verachain-app.vercel.app',
-      'https://verachain-8nrdsq1mg-prior89s-projects.vercel.app',
-      'https://verachain-mobile.vercel.app'
-    ];
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      return callback(null, true);
-    }
-    
-    console.log('CORS allowed for unknown origin:', origin);
-    callback(null, true); // 프로덕션에서도 일시적으로 모두 허용
-  },
+  origin: true, // 모든 도메인 허용
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'],
   allowedHeaders: [
@@ -73,30 +40,31 @@ const corsOptions = {
     'Accept',
     'Origin',
     'Access-Control-Request-Method',
-    'Access-Control-Request-Headers'
+    'Access-Control-Request-Headers',
+    'X-Forwarded-For',
+    'X-Real-IP'
   ],
-  exposedHeaders: ['set-cookie'],
+  exposedHeaders: ['set-cookie', 'authorization'],
   preflightContinue: false,
   optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
 
-// 추가 CORS 헤더 설정 미들웨어
+// 추가 CORS 헤더 설정 미들웨어 - 모든 요청에 대해 허용
 app.use((req, res, next) => {
-  const origin = req.headers.origin;
+  const origin = req.headers.origin || req.headers.referer || '*';
   
-  // Vercel 도메인이거나 허용된 도메인인 경우 CORS 헤더 설정
-  if (origin && (origin.match(/https:\/\/.*\.vercel\.app$/) || origin.includes('localhost'))) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  
+  res.header('Access-Control-Allow-Origin', origin);
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH,HEAD');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers');
-  res.header('Access-Control-Expose-Headers', 'set-cookie');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers, X-Forwarded-For, X-Real-IP');
+  res.header('Access-Control-Expose-Headers', 'set-cookie, authorization');
+  
+  console.log(`🌐 CORS Request from: ${origin} - Method: ${req.method}`);
   
   if (req.method === 'OPTIONS') {
+    console.log('🔄 OPTIONS preflight handled');
     res.status(200).end();
     return;
   }
@@ -137,6 +105,16 @@ app.get('/api/health', (req, res) => {
     status: 'OK', 
     timestamp: new Date(),
     environment: process.env.NODE_ENV || 'development'
+  });
+});
+
+app.get('/api/test', (req, res) => {
+  res.json({ 
+    success: true, 
+    message: 'Mobile API test successful',
+    origin: req.headers.origin || 'unknown',
+    userAgent: req.headers['user-agent'] || 'unknown',
+    timestamp: new Date().toISOString()
   });
 });
 
