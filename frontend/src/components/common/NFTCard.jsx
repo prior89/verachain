@@ -314,3 +314,4 @@ const NFTCard = ({ certificate, onClick }) => {
 
 export default NFTCard;
 
+

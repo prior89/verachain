@@ -1,4 +1,4 @@
-import api from './api';
+﻿import api from './api';
 
 const ocrService = {
   async extractText(imageBase64, language = 'eng') {
@@ -131,11 +131,11 @@ const ocrService = {
   // Helper function to parse certificate patterns
   parseCertificatePatterns(text) {
     const patterns = {
-      certNumber: /(?:CERT|Certificate|인증서)[\s-]*(?:No|번호)?[\s:]*([A-Z0-9-]+)/i,
+      certNumber: /(?:CERT|Certificate|?몄쬆??[\s-]*(?:No|踰덊샇)?[\s:]*([A-Z0-9-]+)/i,
       date: /(\d{4}[-/]\d{2}[-/]\d{2})/,
-      brand: /(Chanel|Hermès|Louis Vuitton|Gucci|Rolex|샤넬|에르메스|루이비통|구찌|롤렉스)/i,
-      serial: /(?:Serial|시리얼)[\s:]*([A-Z0-9]+)/i,
-      model: /(?:Model|모델)[\s:]*([A-Z0-9\s]+)/i
+      brand: /(Chanel|Herm챔s|Louis Vuitton|Gucci|Rolex|?ㅻ꽟|?먮Ⅴ硫붿뒪|猷⑥씠鍮꾪넻|援ъ컡|濡ㅻ젆??/i,
+      serial: /(?:Serial|?쒕━??[\s:]*([A-Z0-9]+)/i,
+      model: /(?:Model|紐⑤뜽)[\s:]*([A-Z0-9\s]+)/i
     };
 
     const extracted = {};

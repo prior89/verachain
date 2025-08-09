@@ -1,4 +1,4 @@
-import axios from 'axios';
+﻿import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
@@ -122,7 +122,7 @@ export const adsService = {
       // Afternoon - prioritize handbags
       filteredAds = ads.filter(ad => 
         ad.brand.toLowerCase().includes('chanel') || 
-        ad.brand.toLowerCase().includes('hermès') ||
+        ad.brand.toLowerCase().includes('herm챔s') ||
         ad.brand.toLowerCase().includes('louis')
       );
     } else if (currentHour >= 18 && currentHour < 24) {
@@ -174,7 +174,7 @@ export const adsService = {
       },
       {
         id: 'default-2',
-        brand: 'Hermès',
+        brand: 'Herm챔s',
         title: 'Crafted Excellence',
         mediaUrl: '/assets/ads/hermes_ad.mp4',
         mediaType: 'video',

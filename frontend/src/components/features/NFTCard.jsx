@@ -84,3 +84,4 @@ const NFTCard = ({ certificate }) => {
 
 export default NFTCard;
 
+

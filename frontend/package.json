@@ -26,7 +26,7 @@
                      },
     "scripts":  {
                     "start":  "react-scripts start",
-                    "build":  "CI=false react-scripts build",
+                    "build":  "set CI=false \u0026\u0026 react-scripts build",
                     "test":  "react-scripts test",
                     "eject":  "react-scripts eject",
                     "lint":  "eslint src/**/*.{js,jsx}",

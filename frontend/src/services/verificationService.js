@@ -1,4 +1,4 @@
-import api from './api';
+﻿import api from './api';
 
 const verificationService = {
   async verifyProduct(imageBase64, type = 'auto') {

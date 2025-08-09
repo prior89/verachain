@@ -22,7 +22,7 @@ const Header = ({
         <div className="header-left">
           {showBack && (
             <button className="header-btn" onClick={handleBack}>
-              <ArrowLeft size={24} />
+              [Back]
             </button>
           )}
         </div>
@@ -41,13 +41,13 @@ const Header = ({
         <div className="header-right">
           {showNotifications && (
             <button className="header-btn">
-              <Bell size={20} />
+              [Alert]
               <span className="notification-badge">3</span>
             </button>
           )}
           {showSettings && (
             <button className="header-btn" onClick={() => navigate('/settings')}>
-              <Settings size={20} />
+              [Settings]
             </button>
           )}
         </div>
@@ -57,4 +57,5 @@ const Header = ({
 };
 
 export default Header;
+
 

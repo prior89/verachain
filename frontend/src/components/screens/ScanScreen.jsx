@@ -86,7 +86,7 @@ const ScanScreen = () => {
     <div className="scan-container">
       <div className="scan-header">
         <button className="back-button" onClick={() => navigate('/')}>
-          <ArrowLeft size={24} />
+          [Back]
         </button>
         <span className="scan-title">AUTHENTICATION</span>
       </div>
@@ -117,4 +117,5 @@ const ScanScreen = () => {
 };
 
 export default ScanScreen;
+
 

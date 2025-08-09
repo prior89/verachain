@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Frontend Privacy Utilities
  * Ensures data privacy on the client side
  */

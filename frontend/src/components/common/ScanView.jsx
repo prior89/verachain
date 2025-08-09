@@ -426,3 +426,4 @@ const ScanView = ({ onScanComplete, onError }) => {
 
 export default ScanView;
 
+

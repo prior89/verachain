@@ -31,7 +31,7 @@ const CertificateDetail = () => {
     <div className="certificate-detail-container">
       <div className="detail-header">
         <button className="back-button" onClick={() => navigate('/certificates')}>
-          <ArrowLeft size={24} />
+          [Back]
         </button>
         <h1 className="detail-title">NFT CERTIFICATE</h1>
       </div>
@@ -103,4 +103,5 @@ const CertificateDetail = () => {
 };
 
 export default CertificateDetail;
+
 

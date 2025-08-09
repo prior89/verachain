@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Frontend Privacy Utils Tests
  */
 
@@ -83,7 +83,7 @@ describe('Privacy Utils', () => {
       const nft = {
         tokenId: '12345',
         ownerAddress: '0x123abc',
-        brand: 'Hermès',
+        brand: 'Herm챔s',
         model: 'Birkin',
         txHash: '0xtx123',
         blockNumber: 1234567
@@ -94,7 +94,7 @@ describe('Privacy Utils', () => {
       expect(sanitized.displayId).toMatch(/^VERA-2024-/);
       expect(typeof sanitized.tokenId).toBe('number');
       expect(sanitized.tokenId).not.toBe(12345);
-      expect(sanitized.brand).toBe('Hermès');
+      expect(sanitized.brand).toBe('Herm챔s');
       expect(sanitized.model).toBe('Birkin');
       expect(sanitized.network).toBe('Polygon Amoy');
       expect(sanitized.status).toBe('ACTIVE');
