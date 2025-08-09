@@ -28,21 +28,19 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// CORS 설정
+// CORS 설정 - 모든 Vercel 도메인 허용 및 강화된 헤더 지원
 const corsOptions = {
   origin: function (origin, callback) {
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'https://verachain-pl.vercel.app',
-      'https://verachain.vercel.app',
-      'https://verachain-app.vercel.app',
-      'https://verachain-8nrdsq1mg-prior89s-projects.vercel.app',
-      'https://verachain-mobile.vercel.app'
-    ];
+    console.log('CORS Origin:', origin);
     
-    // Vercel 도메인 자동 허용
+    // 개발 환경에서는 모두 허용
+    if (process.env.NODE_ENV === 'development') {
+      return callback(null, true);
+    }
+    
+    // Vercel 도메인 모두 허용 (.vercel.app으로 끝나는 모든 도메인)
     if (origin && origin.match(/https:\/\/.*\.vercel\.app$/)) {
+      console.log('Vercel domain allowed:', origin);
       return callback(null, true);
     }
     
@@ -51,22 +49,60 @@ const corsOptions = {
       return callback(null, true);
     }
     
-    // 허용 목록 체크
+    const allowedOrigins = [
+      'https://verachain-pl.vercel.app',
+      'https://verachain.vercel.app',
+      'https://verachain-app.vercel.app',
+      'https://verachain-8nrdsq1mg-prior89s-projects.vercel.app',
+      'https://verachain-mobile.vercel.app'
+    ];
+    
     if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      console.log('CORS blocked:', origin);
-      callback(null, true); // 테스트용 - 모두 허용
+      return callback(null, true);
     }
+    
+    console.log('CORS allowed for unknown origin:', origin);
+    callback(null, true); // 프로덕션에서도 일시적으로 모두 허용
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'X-Requested-With',
+    'Accept',
+    'Origin',
+    'Access-Control-Request-Method',
+    'Access-Control-Request-Headers'
+  ],
+  exposedHeaders: ['set-cookie'],
   preflightContinue: false,
-  optionsSuccessStatus: 204
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
+
+// 추가 CORS 헤더 설정 미들웨어
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  
+  // Vercel 도메인이거나 허용된 도메인인 경우 CORS 헤더 설정
+  if (origin && (origin.match(/https:\/\/.*\.vercel\.app$/) || origin.includes('localhost'))) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+  
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH,HEAD');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers');
+  res.header('Access-Control-Expose-Headers', 'set-cookie');
+  
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+  
+  next();
+});
 
 // Body parser
 app.use(express.json());
