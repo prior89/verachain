@@ -26,7 +26,7 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   text-align: center;
 }
 
@@ -38,7 +38,7 @@
   height: 100px;
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.2));
   border-radius: 50%;
-  border: 2px solid var(--luxury-gold);
+  border: 2px solid var(--primary-purple);
 }
 
 .ad-placeholder p {
@@ -135,7 +135,7 @@
 
 .ad-cta {
   padding: 12px 32px;
-  background: linear-gradient(135deg, var(--luxury-gold), var(--luxury-gold-dark));
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-purple-dark));
   border: none;
   border-radius: 30px;
   color: var(--deep-black);
@@ -149,7 +149,7 @@
 }
 
 .ad-cta:hover {
-  background: linear-gradient(135deg, var(--luxury-gold-light), var(--luxury-gold));
+  background: linear-gradient(135deg, var(--primary-purple-light), var(--primary-purple));
   box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
   transform: translateY(-2px);
 }
@@ -185,8 +185,8 @@
 
 .nav-btn:hover {
   background: rgba(212, 175, 55, 0.2);
-  border-color: var(--luxury-gold);
-  color: var(--luxury-gold);
+  border-color: var(--primary-purple);
+  color: var(--primary-purple);
   transform: scale(1.1);
 }
 
@@ -203,8 +203,8 @@
 
 .progress-track {
   height: 100%;
-  background: linear-gradient(90deg, var(--luxury-gold), var(--luxury-gold-light));
-  box-shadow: 0 0 10px var(--luxury-gold);
+  background: linear-gradient(90deg, var(--primary-purple), var(--primary-purple-light));
+  box-shadow: 0 0 10px var(--primary-purple);
 }
 
 /* Dots Indicator */
@@ -231,7 +231,7 @@
 .indicator-dot.active {
   width: 24px;
   border-radius: 4px;
-  background: var(--luxury-gold);
+  background: var(--primary-purple);
 }
 
 .indicator-dot:hover {
@@ -273,8 +273,8 @@
 
 .control-btn:hover {
   background: rgba(212, 175, 55, 0.2);
-  border-color: var(--luxury-gold);
-  color: var(--luxury-gold);
+  border-color: var(--primary-purple);
+  color: var(--primary-purple);
 }
 
 .ad-counter {
@@ -295,14 +295,14 @@
   padding: 6px 12px;
   background: rgba(212, 175, 55, 0.2);
   backdrop-filter: blur(10px);
-  border: 1px solid var(--luxury-gold);
+  border: 1px solid var(--primary-purple);
   border-radius: 20px;
   z-index: 10;
 }
 
 .badge-text {
   font-size: 10px;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   font-weight: 600;
   letter-spacing: 1px;
 }
@@ -322,9 +322,9 @@
   position: absolute;
   width: 2px;
   height: 2px;
-  background: var(--luxury-gold);
+  background: var(--primary-purple);
   border-radius: 50%;
-  box-shadow: 0 0 6px var(--luxury-gold);
+  box-shadow: 0 0 6px var(--primary-purple);
 }
 
 /* Responsive Design */

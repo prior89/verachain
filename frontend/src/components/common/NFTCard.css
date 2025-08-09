@@ -93,14 +93,14 @@
 }
 
 .brand-icon {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 .brand-name {
   font-family: var(--font-heading);
   font-size: 18px;
   font-weight: 600;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   text-transform: uppercase;
   letter-spacing: 2px;
 }
@@ -160,7 +160,7 @@
 }
 
 .confidence-value {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   font-weight: 600;
 }
 
@@ -200,7 +200,7 @@
 }
 
 .info-item svg {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 .info-label {
@@ -221,10 +221,10 @@
   position: absolute;
   width: 4px;
   height: 4px;
-  background: var(--luxury-gold);
+  background: var(--primary-purple);
   border-radius: 50%;
   pointer-events: none;
-  box-shadow: 0 0 10px var(--luxury-gold);
+  box-shadow: 0 0 10px var(--primary-purple);
 }
 
 /* Back Side Styles */
@@ -273,7 +273,7 @@
 }
 
 .info-row svg {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 .info-row .label {
@@ -292,7 +292,7 @@
 }
 
 .tx-hash .value {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 /* QR Section */
@@ -336,7 +336,7 @@
 .view-blockchain-btn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, var(--luxury-gold), var(--luxury-gold-dark));
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-purple-dark));
   border: none;
   border-radius: 12px;
   color: var(--deep-black);
@@ -348,7 +348,7 @@
 }
 
 .view-blockchain-btn:hover {
-  background: linear-gradient(135deg, var(--luxury-gold-light), var(--luxury-gold));
+  background: linear-gradient(135deg, var(--primary-purple-light), var(--primary-purple));
   box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
 }
 

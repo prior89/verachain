@@ -60,7 +60,7 @@
 .modal-title {
   margin: 0;
   font-size: 1.5rem;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   font-family: var(--font-heading);
 }
 
@@ -106,7 +106,7 @@
 }
 
 .modal-body::-webkit-scrollbar-thumb {
-  background: var(--luxury-gold);
+  background: var(--primary-purple);
   border-radius: var(--radius-full);
 }
 

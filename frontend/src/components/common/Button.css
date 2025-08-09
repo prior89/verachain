@@ -28,12 +28,12 @@
 
 .btn-secondary {
   background: transparent;
-  color: var(--luxury-gold);
-  border: 2px solid var(--luxury-gold);
+  color: var(--primary-purple);
+  border: 2px solid var(--primary-purple);
 }
 
 .btn-secondary:hover:not(.btn-disabled) {
-  background: var(--luxury-gold);
+  background: var(--primary-purple);
   color: var(--deep-black);
 }
 

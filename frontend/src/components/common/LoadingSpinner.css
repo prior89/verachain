@@ -64,7 +64,7 @@
 
 /* Color variants */
 .spinner-gold {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 .spinner-white {
@@ -110,7 +110,7 @@
 
 /* Luxury variant with shimmer effect */
 .spinner-luxury .spinner-ring {
-  border-top-color: var(--luxury-gold);
+  border-top-color: var(--primary-purple);
   box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
 }
 

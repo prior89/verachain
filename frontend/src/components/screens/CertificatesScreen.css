@@ -38,8 +38,8 @@
 .back-button:hover,
 .refresh-button:hover {
   background: rgba(212, 175, 55, 0.1);
-  border-color: var(--luxury-gold);
-  color: var(--luxury-gold);
+  border-color: var(--primary-purple);
+  color: var(--primary-purple);
 }
 
 .screen-title {
@@ -55,7 +55,7 @@
 }
 
 .title-icon {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 /* Stats Bar */
@@ -84,7 +84,7 @@
 .stat-value {
   font-size: 24px;
   font-weight: 600;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 /* Controls Bar */
@@ -172,7 +172,7 @@
 }
 
 .view-toggle button.active {
-  background: var(--luxury-gold);
+  background: var(--primary-purple);
   color: var(--deep-black);
 }
 
@@ -219,7 +219,7 @@
 
 .list-item:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: var(--luxury-gold);
+  border-color: var(--primary-purple);
   transform: translateX(4px);
 }
 
@@ -235,9 +235,9 @@
   gap: 8px;
   padding: 8px 16px;
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.2));
-  border: 1px solid var(--luxury-gold);
+  border: 1px solid var(--primary-purple);
   border-radius: 20px;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   font-weight: 600;
   font-size: 14px;
 }
@@ -337,7 +337,7 @@
 }
 
 .loading-state svg {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 .empty-state svg {
@@ -357,7 +357,7 @@
 
 .scan-button {
   padding: 12px 32px;
-  background: linear-gradient(135deg, var(--luxury-gold), var(--luxury-gold-dark));
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-purple-dark));
   border: none;
   border-radius: 30px;
   color: var(--deep-black);
@@ -370,7 +370,7 @@
 }
 
 .scan-button:hover {
-  background: linear-gradient(135deg, var(--luxury-gold-light), var(--luxury-gold));
+  background: linear-gradient(135deg, var(--primary-purple-light), var(--primary-purple));
   box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
   transform: translateY(-2px);
 }
@@ -424,8 +424,8 @@
 
 .modal-actions button:hover {
   background: rgba(212, 175, 55, 0.1);
-  border-color: var(--luxury-gold);
-  color: var(--luxury-gold);
+  border-color: var(--primary-purple);
+  color: var(--primary-purple);
 }
 
 /* Responsive */

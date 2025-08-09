@@ -38,8 +38,8 @@
 .back-button:hover,
 .info-button:hover {
   background: rgba(212, 175, 55, 0.1);
-  border-color: var(--luxury-gold);
-  color: var(--luxury-gold);
+  border-color: var(--primary-purple);
+  color: var(--primary-purple);
 }
 
 .screen-title {
@@ -65,7 +65,7 @@
 .info-content h3 {
   font-family: var(--font-heading);
   font-size: 18px;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   margin: 0 0 20px 0;
 }
 
@@ -85,7 +85,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--luxury-gold), var(--luxury-gold-dark));
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-purple-dark));
   color: var(--deep-black);
   display: flex;
   align-items: center;
@@ -176,7 +176,7 @@
 }
 
 .loading-spinner {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 .loading-content p {

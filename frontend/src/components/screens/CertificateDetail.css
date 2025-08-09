@@ -21,7 +21,7 @@
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 3px;
-  color: var(--primary-gold);
+  color: var(--primary-purple);
   margin: 0;
 }
 
@@ -58,7 +58,7 @@
   backface-visibility: hidden;
   border-radius: 16px;
   background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-  border: 2px solid var(--primary-gold);
+  border: 2px solid var(--primary-purple);
   padding: 24px;
   overflow: hidden;
 }
@@ -76,7 +76,7 @@
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 2px;
-  color: var(--primary-gold);
+  color: var(--primary-purple);
 }
 
 .card-content {
@@ -122,7 +122,7 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 20px;
-  color: var(--primary-gold);
+  color: var(--primary-purple);
   font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 600;
@@ -208,8 +208,8 @@
 
 .action-button.view {
   background: transparent;
-  border: 2px solid var(--primary-gold);
-  color: var(--primary-gold);
+  border: 2px solid var(--primary-purple);
+  color: var(--primary-purple);
 }
 
 .action-button.view:hover {

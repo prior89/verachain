@@ -30,7 +30,7 @@
 /* Front Side */
 .card-front {
   background: linear-gradient(135deg, var(--gray-900) 0%, var(--deep-black) 100%);
-  border: 2px solid var(--luxury-gold);
+  border: 2px solid var(--primary-purple);
   display: flex;
   flex-direction: column;
   padding: var(--spacing-xl);
@@ -112,7 +112,7 @@
 
 .value {
   font-size: 0.875rem;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   font-weight: 600;
 }
 
@@ -140,7 +140,7 @@
 /* Back Side */
 .card-back {
   background: linear-gradient(135deg, var(--deep-black) 0%, var(--gray-900) 100%);
-  border: 2px solid var(--luxury-gold);
+  border: 2px solid var(--primary-purple);
   transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
@@ -154,7 +154,7 @@
 .blockchain-info h3 {
   font-family: var(--font-heading);
   font-size: 1.25rem;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   margin: 0 0 var(--spacing-lg) 0;
   text-align: center;
 }

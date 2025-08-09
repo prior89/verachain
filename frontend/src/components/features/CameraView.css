@@ -26,7 +26,7 @@
   width: 60px;
   height: 60px;
   border: 3px solid var(--gray-800);
-  border-top-color: var(--luxury-gold);
+  border-top-color: var(--primary-purple);
   border-radius: 50%;
   margin: 0 auto var(--spacing-md);
   animation: spin 1s linear infinite;
@@ -115,7 +115,7 @@
 }
 
 .capture-button:hover .capture-icon {
-  background: var(--luxury-gold);
+  background: var(--primary-purple);
 }
 
 @keyframes spin {

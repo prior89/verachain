@@ -36,7 +36,7 @@
   font-weight: 600;
   font-size: 16px;
   letter-spacing: 2px;
-  color: var(--primary-gold);
+  color: var(--primary-purple);
 }
 
 .camera-view {
@@ -67,7 +67,7 @@
   position: absolute;
   width: 50px;
   height: 50px;
-  border: 2px solid var(--primary-gold);
+  border: 2px solid var(--primary-purple);
 }
 
 .corner-bracket.top-left {
@@ -101,7 +101,7 @@
 .scan-ring {
   width: 200px;
   height: 200px;
-  border: 3px solid var(--primary-gold);
+  border: 3px solid var(--primary-purple);
   border-radius: 50%;
   animation: rotate 2s linear infinite, pulse 1s ease infinite;
   cursor: pointer;
@@ -117,7 +117,7 @@
   bottom: -3px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: var(--primary-gold);
+  border-top-color: var(--primary-purple);
   animation: rotate 1s linear infinite reverse;
 }
 

@@ -32,10 +32,10 @@
   position: absolute;
   width: 3px;
   height: 3px;
-  background: var(--luxury-gold);
+  background: var(--primary-purple);
   border-radius: 50%;
   opacity: 0.6;
-  box-shadow: 0 0 10px var(--luxury-gold);
+  box-shadow: 0 0 10px var(--primary-purple);
 }
 
 /* Hero Section */
@@ -56,9 +56,9 @@
   gap: 12px;
   padding: 12px 24px;
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.2));
-  border: 1px solid var(--luxury-gold);
+  border: 1px solid var(--primary-purple);
   border-radius: 30px;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 1px;
@@ -66,7 +66,7 @@
 }
 
 .badge-icon {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 .hero-title {
@@ -74,7 +74,7 @@
   font-size: clamp(3rem, 8vw, 5rem);
   font-weight: 700;
   letter-spacing: 6px;
-  background: linear-gradient(135deg, var(--luxury-gold), var(--luxury-gold-light));
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-purple-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -126,12 +126,12 @@
 
 .stat-card:hover {
   background: rgba(212, 175, 55, 0.05);
-  border-color: var(--luxury-gold);
+  border-color: var(--primary-purple);
   transform: translateY(-2px);
 }
 
 .stat-icon {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   width: 24px;
   height: 24px;
 }
@@ -191,7 +191,7 @@
 
 .feature-card:hover {
   transform: translateY(-4px);
-  border-color: var(--luxury-gold);
+  border-color: var(--primary-purple);
 }
 
 .feature-icon-wrapper {
@@ -203,13 +203,13 @@
   justify-content: center;
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.2));
   border-radius: 50%;
-  border: 2px solid var(--luxury-gold);
+  border: 2px solid var(--primary-purple);
 }
 
 .feature-icon {
   width: 30px;
   height: 30px;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 .feature-card h3 {
@@ -265,13 +265,13 @@
 }
 
 .primary-cta {
-  background: linear-gradient(135deg, var(--luxury-gold), var(--luxury-gold-dark));
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-purple-dark));
   color: var(--deep-black);
   box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
 }
 
 .primary-cta:hover {
-  background: linear-gradient(135deg, var(--luxury-gold-light), var(--luxury-gold));
+  background: linear-gradient(135deg, var(--primary-purple-light), var(--primary-purple));
   box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
   transform: translateY(-2px);
 }
@@ -284,8 +284,8 @@
 
 .secondary-cta:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: var(--luxury-gold);
-  color: var(--luxury-gold);
+  border-color: var(--primary-purple);
+  color: var(--primary-purple);
 }
 
 /* Ticker Section */
@@ -325,7 +325,7 @@
 }
 
 .ticker-item svg {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 .ticker-separator {

@@ -13,7 +13,7 @@
 
 .card-luxury {
   background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
-  border: 1px solid var(--luxury-gold);
+  border: 1px solid var(--primary-purple);
   box-shadow: var(--shadow-luxury);
 }
 

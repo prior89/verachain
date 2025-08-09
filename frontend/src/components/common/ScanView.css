@@ -42,7 +42,7 @@
 
 .camera-error button {
   padding: 12px 24px;
-  background: var(--luxury-gold);
+  background: var(--primary-purple);
   border: none;
   border-radius: 8px;
   color: var(--deep-black);
@@ -52,7 +52,7 @@
 }
 
 .camera-error button:hover {
-  background: var(--luxury-gold-light);
+  background: var(--primary-purple-light);
   transform: translateY(-2px);
 }
 
@@ -83,10 +83,10 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--luxury-gold),
+    var(--primary-purple),
     transparent
   );
-  box-shadow: 0 0 20px var(--luxury-gold);
+  box-shadow: 0 0 20px var(--primary-purple);
   pointer-events: none;
 }
 
@@ -95,9 +95,9 @@
   position: absolute;
   width: 20px;
   height: 20px;
-  border: 2px solid var(--luxury-gold);
+  border: 2px solid var(--primary-purple);
   border-radius: 50%;
-  box-shadow: 0 0 20px var(--luxury-gold);
+  box-shadow: 0 0 20px var(--primary-purple);
 }
 
 /* Progress Container */
@@ -126,14 +126,14 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--luxury-gold), var(--luxury-gold-light));
+  background: linear-gradient(90deg, var(--primary-purple), var(--primary-purple-light));
   border-radius: 2px;
-  box-shadow: 0 0 10px var(--luxury-gold);
+  box-shadow: 0 0 10px var(--primary-purple);
 }
 
 .progress-text {
   font-size: 12px;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   font-weight: 600;
   min-width: 35px;
   text-align: right;
@@ -164,7 +164,7 @@
 }
 
 .status-icon.scanning {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   animation: pulse 2s infinite;
 }
 
@@ -177,7 +177,7 @@
 }
 
 .status-icon.complete {
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
   animation: sparkle 1s ease-in-out;
 }
 
@@ -203,7 +203,7 @@
 .loading-icon {
   width: 20px;
   height: 20px;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 /* Action Buttons */
@@ -230,12 +230,12 @@
 }
 
 .scan-button.primary {
-  background: linear-gradient(135deg, var(--luxury-gold), var(--luxury-gold-dark));
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-purple-dark));
   color: var(--deep-black);
 }
 
 .scan-button.primary:hover {
-  background: linear-gradient(135deg, var(--luxury-gold-light), var(--luxury-gold));
+  background: linear-gradient(135deg, var(--primary-purple-light), var(--primary-purple));
   box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
 }
 
@@ -273,7 +273,7 @@
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--luxury-gold);
+  color: var(--primary-purple);
 }
 
 .result-info {
