@@ -7,6 +7,7 @@ const RegisterScreen = () => {
   const navigate = useNavigate();
   const { register, isAuthenticated } = useAuth();
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -38,6 +39,13 @@ const RegisterScreen = () => {
 
   const validateForm = () => {
     const newErrors = {};
+
+    // Name validation
+    if (!formData.name) {
+      newErrors.name = 'Name is required';
+    } else if (formData.name.length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
+    }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -76,6 +84,7 @@ const RegisterScreen = () => {
 
     try {
       const result = await register({
+        name: formData.name,
         email: formData.email,
         password: formData.password
       });
@@ -105,6 +114,23 @@ const RegisterScreen = () => {
         </div>
 
         <form className="register-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+              className={errors.name ? 'error' : ''}
+              autoComplete="name"
+            />
+            {errors.name && (
+              <span className="error-text">{errors.name}</span>
+            )}
+          </div>
+
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input

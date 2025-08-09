@@ -80,6 +80,14 @@ const productSchema = new mongoose.Schema({
     },
     transactionHash: String
   }],
+  price: {
+    type: Number,
+    min: 0
+  },
+  currency: {
+    type: String,
+    default: 'USD'
+  },
   qrCode: {
     data: String,
     image: String
