@@ -25,7 +25,7 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "set CI=false && react-scripts build",
+        "build": "CI=false react-scripts build",
         "vercel-build": "npm run build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
@@ -51,6 +51,6 @@
         "cross-env": "^10.0.0"
     },
     "engines": {
-        "node": "22.x"
+        "node": ">=20.x"
     }
 }
