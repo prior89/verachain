@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: verachain-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        value: mongodb+srv://verachain:verachain2025@cluster0.mongodb.net/verachain?retryWrites=true&w=majority
+      - key: JWT_SECRET
+        value: verachain-jwt-secret-2025-production
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL
+        value: https://verachain-pl.vercel.app
+      - key: CORS_ORIGIN
+        value: https://verachain-pl.vercel.app
+      - key: ALLOWED_ORIGINS
+        value: https://verachain-pl.vercel.app,https://verachain.vercel.app,https://verachain-app.vercel.app
+      - key: ALCHEMY_API_KEY
+        value: 3bYhEJy3MLCkCVHczuFMc
+      - key: POLYGON_RPC_URL
+        value: https://polygon-amoy.g.alchemy.com/v2/3bYhEJy3MLCkCVHczuFMc
+      - key: CHAIN_ID
+        value: 80002
+      - key: WALLET_ADDRESS
+        value: 0x8d907C897faa884d3D38B00c4066E774d9D62305
+      - key: PRIVATE_KEY
+        value: 897843cb070f8bbb96d46e472139dbbcadcb2b0ce4d79ae5b56716e56da7a757
+      - key: TESSERACT_LANG
+        value: kor+eng
+      - key: ENABLE_TRACKING
+        value: false
+      - key: STORE_HISTORY
+        value: false
+      - key: EXPOSE_TRANSFER_DATA
+        value: false
+      - key: SHOW_PREVIOUS_OWNERS
+        value: false
