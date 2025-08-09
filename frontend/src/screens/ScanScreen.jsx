@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+﻿import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScanView from '../components/common/ScanView';
@@ -71,7 +71,7 @@ const ScanScreen = () => {
       {/* Header */}
       <div className="scan-header">
         <button className="back-button" onClick={handleBack}>
-          <span className="back-text">←</span>
+          <span className="back-text">??/span>
         </button>
         
         <h1 className="screen-title">Authenticate</h1>
@@ -162,7 +162,7 @@ const ScanScreen = () => {
                 transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
                 className="loading-spinner"
               >
-                <span className="loading-text">🔒</span>
+                <span className="loading-text">?뵏</span>
               </motion.div>
               <p>Creating your certificate...</p>
             </div>

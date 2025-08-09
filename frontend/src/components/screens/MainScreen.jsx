@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Layout from '../layout/Layout';
@@ -71,7 +71,7 @@ const MainScreen = () => {
     },
     {
       id: '2',
-      brand: 'Hermès',
+      brand: 'Herm챔s',
       title: 'Crafted Excellence',
       mediaUrl: '/assets/ads/hermes_ad.mp4',
       mediaType: 'video',
@@ -346,15 +346,15 @@ const MainScreen = () => {
             <span className="ticker-item">
               Real-time Verification
             </span>
-            <span className="ticker-separator">•</span>
+            <span className="ticker-separator">??/span>
             <span className="ticker-item">
               Polygon Amoy Network
             </span>
-            <span className="ticker-separator">•</span>
+            <span className="ticker-separator">??/span>
             <span className="ticker-item">
               TensorFlow AI
             </span>
-            <span className="ticker-separator">•</span>
+            <span className="ticker-separator">??/span>
             <span className="ticker-item">
               Zero Knowledge Privacy
             </span>

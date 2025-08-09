@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { X } from 'lucide-react';
 import './Modal.css';
 
 const Modal = ({

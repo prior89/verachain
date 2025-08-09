@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Hash, Cpu, Network, Award, Calendar } from 'lucide-react';
 import './NFTCard.css';
 
 const NFTCard = ({ certificate, onClick }) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import productService from '../../services/productService';
 import { toast } from 'react-toastify';
@@ -339,7 +339,7 @@ const HomeScreen = () => {
                     </>
                   )}
                   {verificationResult.blockchainVerified && (
-                    <p className="blockchain-badge">✓ Blockchain Verified</p>
+                    <p className="blockchain-badge">??Blockchain Verified</p>
                   )}
                 </div>
               )}

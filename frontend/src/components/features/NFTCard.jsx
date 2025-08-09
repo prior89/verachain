@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Shield, Hash, Cpu, Network } from 'lucide-react';
+﻿import React, { useState } from 'react';
 import './NFTCard.css';
 
 const NFTCard = ({ certificate }) => {

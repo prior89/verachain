@@ -4,7 +4,18 @@
       "Bash(npm ls:*)",
       "Bash(npm install)",
       "Bash(mkdir:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:verachain-frontend.vercel.app)",
+      "Bash(npm run lint)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm install:*)",
+      "Bash(git add:*)",
+      "Bash(rm:*)",
+      "Bash(git push:*)",
+      "Bash(npx @react-native-community/cli@latest init:*)"
     ],
     "deny": []
   }

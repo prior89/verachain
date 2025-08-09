@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 // All icons removed per CLAUDE.md specifications
@@ -53,7 +53,7 @@ const CertificatesScreen = () => {
         },
         {
           displayId: `VERA-2024-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
-          brand: 'Hermès',
+          brand: 'Herm챔s',
           model: 'Birkin 30',
           category: 'handbag',
           tokenId: '789012',
@@ -153,7 +153,7 @@ const CertificatesScreen = () => {
       {/* Header */}
       <div className="certificates-header">
         <button className="back-button" onClick={() => navigate(-1)}>
-          <span className="back-text">←</span>
+          <span className="back-text">??/span>
         </button>
         
         <h1 className="screen-title">

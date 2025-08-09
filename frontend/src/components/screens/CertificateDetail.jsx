@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Shield, Link } from 'lucide-react';
 import './CertificateDetail.css';
 
 const CertificateDetail = () => {

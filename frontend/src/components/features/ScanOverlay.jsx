@@ -1,5 +1,4 @@
-import React from 'react';
-import { Check, AlertCircle } from 'lucide-react';
+﻿import React from 'react';
 import './ScanOverlay.css';
 
 const ScanOverlay = ({ 
@@ -26,11 +25,11 @@ const ScanOverlay = ({
       case 'scanning_product':
         return 'Scanning product...';
       case 'product_verified':
-        return 'Product verified ✓';
+        return 'Product verified ??;
       case 'scanning_certificate':
         return 'Scanning certificate...';
       case 'complete':
-        return 'Authentication complete ✓';
+        return 'Authentication complete ??;
       case 'error':
         return 'Scan failed. Please try again.';
       default:
