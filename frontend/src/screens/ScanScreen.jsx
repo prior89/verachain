@@ -71,7 +71,7 @@ const ScanScreen = () => {
       {/* Header */}
       <div className="scan-header">
         <button className="back-button" onClick={handleBack}>
-          <span className="back-text">??/span>
+          <span className="back-text">BACK</span>
         </button>
         
         <h1 className="screen-title">Authenticate</h1>

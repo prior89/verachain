@@ -339,7 +339,7 @@ const HomeScreen = () => {
                     </>
                   )}
                   {verificationResult.blockchainVerified && (
-                    <p className="blockchain-badge">??Blockchain Verified</p>
+                    <p className="blockchain-badge">BLOCKCHAIN VERIFIED</p>
                   )}
                 </div>
               )}

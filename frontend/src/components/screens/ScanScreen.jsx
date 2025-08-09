@@ -62,11 +62,11 @@ const ScanScreen = () => {
       case SCAN_STATES.SCANNING_PRODUCT:
         return "Scan product barcode";
       case SCAN_STATES.PRODUCT_VERIFIED:
-        return "Product verified ??Now scan certificate";
+        return "Product verified! Now scan certificate";
       case SCAN_STATES.SCANNING_CERTIFICATE:
         return "Scanning certificate...";
       case SCAN_STATES.COMPLETE:
-        return "Authentication complete ??;
+        return "Authentication complete!";
       default:
         return "";
     }

@@ -207,7 +207,7 @@ const AdDisplay = ({
                     handlePlayPause();
                   }}
                 >
-                  <span className="control-text">{isPlaying ? '?? : '??}</span>
+                  <span className="control-text">{isPlaying ? 'PAUSE' : 'PLAY'}</span>
                 </button>
                 
                 <button 
@@ -271,7 +271,7 @@ const AdDisplay = ({
             onClick={handlePrevious}
             aria-label="Previous ad"
           >
-            <span className="nav-text">??/span>
+            <span className="nav-text">PREV</span>
           </button>
           
           <button 
@@ -279,7 +279,7 @@ const AdDisplay = ({
             onClick={handleNext}
             aria-label="Next ad"
           >
-            <span className="nav-text">??/span>
+            <span className="nav-text">NEXT</span>
           </button>
         </div>
       )}
@@ -324,7 +324,7 @@ const AdDisplay = ({
             onClick={handlePlayPause}
             aria-label={isPlaying ? 'Pause' : 'Play'}
           >
-            <span className="control-text">{isPlaying ? '?? : '??}</span>
+            <span className="control-text">{isPlaying ? 'PAUSE' : 'PLAY'}</span>
           </button>
           
           {ads.length > 1 && (
@@ -333,7 +333,7 @@ const AdDisplay = ({
               onClick={handleNext}
               aria-label="Skip"
             >
-              <span className="control-text">??/span>
+              <span className="control-text">STOP</span>
             </button>
           )}
         </div>
@@ -350,7 +350,7 @@ const AdDisplay = ({
             onClick={handleFullscreen}
             aria-label="Fullscreen"
           >
-            <span className="control-text">{isFullscreen ? '?? : '??}</span>
+            <span className="control-text">{isFullscreen ? 'EXIT' : 'FULL'}</span>
           </button>
         </div>
       </div>

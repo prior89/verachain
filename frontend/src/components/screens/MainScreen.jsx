@@ -346,15 +346,15 @@ const MainScreen = () => {
             <span className="ticker-item">
               Real-time Verification
             </span>
-            <span className="ticker-separator">??/span>
+            <span className="ticker-separator">•</span>
             <span className="ticker-item">
               Polygon Amoy Network
             </span>
-            <span className="ticker-separator">??/span>
+            <span className="ticker-separator">•</span>
             <span className="ticker-item">
               TensorFlow AI
             </span>
-            <span className="ticker-separator">??/span>
+            <span className="ticker-separator">•</span>
             <span className="ticker-item">
               Zero Knowledge Privacy
             </span>
