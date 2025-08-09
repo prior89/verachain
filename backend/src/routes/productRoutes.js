@@ -16,6 +16,7 @@ const { protect, authorize, optionalAuth } = require('../middleware/auth');
 router.post('/verify', optionalAuth, verifyProduct);
 
 router.get('/', optionalAuth, getProducts);
+router.get('/search', optionalAuth, getProducts); // Search uses the same controller with query params
 router.get('/:id', optionalAuth, getProduct);
 
 router.use(protect);

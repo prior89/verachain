@@ -169,6 +169,18 @@ const privacyProtection = (req, res, next) => {
   // Override json method to sanitize all responses
   res.json = function(data) {
     try {
+      // Skip sanitization for auth endpoints - they need to return user data
+      const fullPath = req.baseUrl + req.path;
+      if (fullPath.includes('/api/auth/login') || fullPath.includes('/api/auth/register') || 
+          fullPath.includes('/api/auth/me') || req.path.includes('/login') || 
+          req.path.includes('/register') || req.path.includes('/me')) {
+        // Only protect password field for auth endpoints
+        if (data && data.data && data.data.password) {
+          delete data.data.password;
+        }
+        return originalJson.call(this, data);
+      }
+      
       // Deep clean the entire response
       let sanitized = deepClean(data);
       

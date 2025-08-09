@@ -27,7 +27,7 @@ const register = async (req, res, next) => {
     res.status(201).json({
       success: true,
       data: {
-        _id: user._id,
+        _id: user._id.toString(),
         name: user.name,
         email: user.email,
         membershipTier: user.membershipTier,
@@ -77,16 +77,21 @@ const login = async (req, res, next) => {
 
     const token = generateToken(user._id);
 
+    // Ensure we have all user data
+    const userData = {
+      _id: user._id.toString(),
+      name: user.name,
+      email: user.email,
+      membershipTier: user.membershipTier,
+      isVerified: user.isVerified,
+      token
+    };
+
+    console.log('Login response data:', userData);
+
     res.status(200).json({
       success: true,
-      data: {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        membershipTier: user.membershipTier,
-        isVerified: user.isVerified,
-        token
-      }
+      data: userData
     });
   } catch (error) {
     next(error);

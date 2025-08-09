@@ -1,79 +1,163 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# VeraChain Mobile App
 
-# Getting Started
+React Native 기반 진품 인증 플랫폼 모바일 앱
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## 🚀 주요 기능
 
-## Step 1: Start the Metro Server
+- **진품 인증**: QR 코드 및 이미지 스캔을 통한 제품 진위 확인
+- **NFT 발행**: 인증된 제품의 NFT 인증서 발행
+- **블록체인 연동**: Polygon 네트워크 기반 투명한 거래 기록
+- **생체 인증**: 지문/Face ID를 통한 안전한 로그인
+- **실시간 알림**: 인증 상태 및 거래 알림
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## 📱 테스트 환경 설정
 
-To start Metro, run the following command from the _root_ of your React Native project:
+### 필수 요구사항
 
+- Node.js 18.x 이상
+- React Native CLI
+- Android Studio (Android 개발)
+- Xcode (iOS 개발, Mac 필요)
+- Metro Bundler
+
+### 설치 방법
+
+1. **저장소 클론**
 ```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+git clone https://github.com/prior89/verachain-mobile.git
+cd verachain-mobile
 ```
 
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
+2. **의존성 설치**
 ```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+npm install
 ```
 
-### For iOS
-
+3. **iOS 설정 (Mac only)**
 ```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+cd ios && pod install
+cd ..
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+### 실행 방법
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+#### Android
+```bash
+# 에뮬레이터 실행 후
+npx react-native run-android
 
-## Step 3: Modifying your App
+# 또는 Metro 먼저 실행
+npx react-native start
+# 새 터미널에서
+npx react-native run-android
+```
 
-Now that you have successfully run the app, let's modify it.
+#### iOS (Mac only)
+```bash
+npx react-native run-ios
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+# 또는 특정 시뮬레이터 지정
+npx react-native run-ios --simulator="iPhone 14"
+```
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+### 백엔드 연결 설정
 
-## Congratulations! :tada:
+1. **로컬 백엔드 서버 실행**
+   - 백엔드 저장소: https://github.com/prior89/verachain
+   - 포트: 5001
 
-You've successfully run and modified your React Native App. :partying_face:
+2. **API 엔드포인트 설정**
+   - 파일: `src/services/api.ts`
+   - 개발 환경: `http://localhost:5001/api`
+   - Android 에뮬레이터: `http://10.0.2.2:5001/api`
 
-### Now what?
+### 테스트 계정
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+```
+이메일: test1@test.com
+비밀번호: password
 
-# Troubleshooting
+이메일: test2@test.com
+비밀번호: password
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+이메일: admin@test.com
+비밀번호: password
+```
 
-# Learn More
+## 🛠️ 주요 기술 스택
 
-To learn more about React Native, take a look at the following resources:
+- **Frontend**: React Native, TypeScript
+- **State Management**: React Context API
+- **Navigation**: React Navigation v6
+- **UI Components**: Custom Components
+- **Authentication**: JWT + AsyncStorage
+- **Network**: Axios
+- **Image Processing**: React Native Image Picker
+- **Biometrics**: React Native Touch ID
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## 📂 프로젝트 구조
+
+```
+mobile/
+├── android/           # Android 네이티브 코드
+├── ios/              # iOS 네이티브 코드
+├── src/
+│   ├── components/   # 재사용 가능한 컴포넌트
+│   ├── screens/      # 화면 컴포넌트
+│   ├── services/     # API 및 서비스 로직
+│   ├── context/      # Context API providers
+│   ├── navigation/   # 네비게이션 설정
+│   ├── utils/        # 유틸리티 함수
+│   └── types/        # TypeScript 타입 정의
+├── App.tsx           # 앱 진입점
+└── package.json      # 프로젝트 설정
+
+```
+
+## 🔧 환경 변수 설정
+
+`.env` 파일 생성:
+```
+API_URL=http://localhost:5001/api
+POLYGON_RPC_URL=https://polygon-amoy.g.alchemy.com/v2/YOUR_KEY
+```
+
+## 🐛 문제 해결
+
+### Android 빌드 오류
+```bash
+cd android && ./gradlew clean
+cd .. && npx react-native run-android
+```
+
+### iOS 빌드 오류
+```bash
+cd ios && pod deintegrate
+pod install
+cd .. && npx react-native run-ios
+```
+
+### Metro 번들러 캐시 초기화
+```bash
+npx react-native start --reset-cache
+```
+
+## 📝 라이선스
+
+MIT License
+
+## 🤝 기여하기
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📞 문의
+
+프로젝트 관련 문의사항은 Issues 탭을 이용해주세요.
+
+---
+
+Made with ❤️ by VeraChain Team

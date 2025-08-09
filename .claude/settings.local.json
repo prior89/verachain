@@ -35,7 +35,23 @@
       "Bash(npm run seed:authentic:*)",
       "Bash(npx serve:*)",
       "WebFetch(domain:verachain-pl.vercel.app)",
-      "Bash(start http://localhost:3001)"
+      "Bash(start http://localhost:3001)",
+      "Bash(npx vercel:*)",
+      "Bash(git init:*)",
+      "Bash(git branch:*)",
+      "Bash(taskkill:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run seed:*)",
+      "Bash(start test-frontend-integration.html)",
+      "Bash(npm run dev:*)",
+      "Bash(taskkill:*)",
+      "Bash(start test-frontend-buttons.html)",
+      "Bash(npm run seed:ai:*)",
+      "Bash(start test-api-connection.html)",
+      "Bash(start http://localhost:3001/login)",
+      "Bash(touch:*)",
+      "Bash(start C:UsersVeraChainquick-test.html)",
+      "Bash(start \"C:\\Users\\VeraChain\\quick-test.html\")"
     ],
     "deny": []
   }

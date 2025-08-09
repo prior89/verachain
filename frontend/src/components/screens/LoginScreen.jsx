@@ -100,6 +100,34 @@ const LoginScreen = () => {
           >
             {loading ? 'LOGGING IN...' : 'LOGIN'}
           </button>
+
+          <button 
+            type="button" 
+            className="login-button"
+            style={{backgroundColor: '#28a745', marginTop: '10px'}}
+            onClick={async () => {
+              console.log('🔍 Testing API connection...');
+              try {
+                const testResponse = await fetch('http://localhost:5001/api/health');
+                const testData = await testResponse.json();
+                console.log('✅ API Health:', testData);
+                
+                const loginResponse = await fetch('http://localhost:5001/api/auth/login', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ email: 'test1@test.com', password: 'password' })
+                });
+                const loginData = await loginResponse.json();
+                console.log('✅ Direct Login Test:', loginData);
+                alert('Check console for results');
+              } catch (error) {
+                console.error('❌ API Test failed:', error);
+                alert('API test failed - check console');
+              }
+            }}
+          >
+            DEBUG API
+          </button>
         </form>
 
         <div className="login-footer">
@@ -107,19 +135,6 @@ const LoginScreen = () => {
           <Link to="/register" className="register-link">
             Sign Up
           </Link>
-        </div>
-
-        <div className="demo-accounts">
-          <p className="demo-title">Demo Accounts</p>
-          <div className="demo-account">
-            <span>test1@test.com / password</span>
-          </div>
-          <div className="demo-account">
-            <span>test2@test.com / password</span>
-          </div>
-          <div className="demo-account">
-            <span>admin@test.com / password</span>
-          </div>
         </div>
       </div>
     </div>

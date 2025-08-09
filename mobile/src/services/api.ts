@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // API 기본 URL - 환경에 따라 자동 설정
 const API_BASE_URL = __DEV__ 
-  ? 'http://localhost:5002/api'  // 개발 환경
+  ? 'http://localhost:5001/api'  // 개발 환경
   : 'https://your-production-api.com/api';  // 프로덕션 환경
 
 // axios 인스턴스 생성

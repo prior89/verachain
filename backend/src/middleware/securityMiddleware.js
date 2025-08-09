@@ -34,7 +34,7 @@ const createRateLimiter = (windowMs, max, message) => {
 // Different rate limits for different endpoints
 const authLimiter = createRateLimiter(
   15 * 60 * 1000, // 15 minutes
-  5, // 5 requests
+  50, // 50 requests - increased for development
   'Too many authentication attempts'
 );
 
@@ -55,10 +55,25 @@ const generalLimiter = createRateLimiter(
  */
 const corsOptions = {
   origin: function (origin, callback) {
-    const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'];
+    const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'http://127.0.0.1:3000',
+      'http://127.0.0.1:3001',
+      'https://verachain-pl.vercel.app',
+      'https://verachain-frontend.vercel.app'
+    ];
     
-    // Allow requests with no origin (mobile apps, Postman)
+    // Allow requests with no origin (mobile apps, Postman, local files)
     if (!origin) return callback(null, true);
+    
+    // Allow file:// protocol for local testing
+    if (origin.startsWith('file://')) return callback(null, true);
+    
+    // Allow all localhost origins for development
+    if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+      return callback(null, true);
+    }
     
     if (allowedOrigins.includes(origin)) {
       callback(null, true);

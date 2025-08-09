@@ -22,6 +22,7 @@ const verificationRoutes = require('./src/routes/verificationRoutes');
 const nftRoutes = require('./src/routes/nftRoutes');
 const certificateRoutes = require('./src/routes/certificateRoutes');
 const adsRoutes = require('./src/routes/adsRoutes');
+const aiScanRoutes = require('./src/routes/aiScanRoutes');
 
 connectDB();
 
@@ -66,6 +67,7 @@ app.use('/api/verify', verificationRoutes);
 app.use('/api/nft', nftRoutes);
 app.use('/api/certificates', certificateRoutes);
 app.use('/api/ads', adsRoutes);
+app.use('/api/ai', aiScanRoutes);
 
 app.use(errorHandler);
 

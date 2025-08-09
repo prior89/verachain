@@ -132,7 +132,14 @@ const HomeScreen = () => {
             <h1>VERACHAIN</h1>
           </div>
           <div className="user-section">
-            <span className="user-name">Welcome, {user?.username || user?.email}</span>
+            <div className="user-info">
+              <span className="user-name">Welcome, {user?.name || 'User'}!</span>
+              <div className="user-details">
+                <small>📧 {user?.email || 'Loading...'}</small>
+                <small>🏆 {(user?.membershipTier || 'basic').toUpperCase()}</small>
+                <small>🆔 {user?._id?.slice(-8) || 'Loading...'}</small>
+              </div>
+            </div>
             <button className="logout-btn" onClick={logout}>Logout</button>
           </div>
         </div>

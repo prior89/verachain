@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeraChain Frontend-Backend Integration Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #764ba2;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 6px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            margin: 5px;
+            width: 200px;
+        }
+        .summary {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            border-radius: 8px;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #764ba2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 VeraChain API Integration Test</h1>
+        
+        <div class="test-section">
+            <h2>Test Controls</h2>
+            <button onclick="runAllTests()">Run All Tests</button>
+            <button onclick="clearResults()">Clear Results</button>
+        </div>
+
+        <div class="test-section">
+            <h2>Manual Testing</h2>
+            <div>
+                <input type="email" id="testEmail" placeholder="Email" value="test@example.com">
+                <input type="password" id="testPassword" placeholder="Password" value="Test123!">
+                <button onclick="testLogin()">Test Login</button>
+                <button onclick="testRegister()">Test Register</button>
+            </div>
+        </div>
+
+        <div id="results"></div>
+        <div id="summary" class="summary" style="display:none;"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5001/api';
+        const FRONTEND_URL = 'http://localhost:3001';
+        let authToken = '';
+        let testResults = { passed: 0, failed: 0, total: 0 };
+
+        function log(message, type = 'info') {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${type}`;
+            resultDiv.innerHTML = `${new Date().toLocaleTimeString()} - ${message}`;
+            resultsDiv.appendChild(resultDiv);
+            
+            testResults.total++;
+            if (type === 'success') testResults.passed++;
+            else if (type === 'error') testResults.failed++;
+            
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const summaryDiv = document.getElementById('summary');
+            summaryDiv.style.display = 'block';
+            summaryDiv.innerHTML = `
+                <h2>📊 Test Summary</h2>
+                <p>Total Tests: ${testResults.total}</p>
+                <p>✅ Passed: ${testResults.passed}</p>
+                <p>❌ Failed: ${testResults.failed}</p>
+                <p>📈 Success Rate: ${testResults.total > 0 ? Math.round((testResults.passed / testResults.total) * 100) : 0}%</p>
+            `;
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('summary').style.display = 'none';
+            testResults = { passed: 0, failed: 0, total: 0 };
+        }
+
+        async function testEndpoint(name, method, url, data = null, useAuth = false) {
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+                
+                if (useAuth && authToken) {
+                    options.headers['Authorization'] = `Bearer ${authToken}`;
+                }
+                
+                if (data) {
+                    options.body = JSON.stringify(data);
+                }
+                
+                const response = await fetch(url, options);
+                const result = await response.json();
+                
+                if (response.ok) {
+                    log(`✅ ${name}: SUCCESS - ${JSON.stringify(result).substring(0, 100)}...`, 'success');
+                    return result;
+                } else {
+                    log(`❌ ${name}: FAILED - Status ${response.status}: ${result.message || result.error}`, 'error');
+                    return null;
+                }
+            } catch (error) {
+                log(`❌ ${name}: ERROR - ${error.message}`, 'error');
+                return null;
+            }
+        }
+
+        async function runAllTests() {
+            clearResults();
+            log('🚀 Starting comprehensive API tests...', 'warning');
+            
+            // Test 1: Backend Health
+            await testEndpoint('Backend Health Check', 'GET', `${API_URL}/health`);
+            
+            // Test 2: Frontend Availability
+            try {
+                const response = await fetch(FRONTEND_URL);
+                if (response.ok) {
+                    log('✅ Frontend is accessible', 'success');
+                } else {
+                    log('❌ Frontend is not accessible', 'error');
+                }
+            } catch (error) {
+                log('❌ Frontend connection failed: ' + error.message, 'error');
+            }
+            
+            // Test 3: CORS Check
+            await testEndpoint('CORS Configuration', 'GET', `${API_URL}/health`);
+            
+            // Test 4: User Registration
+            const testEmail = `test${Date.now()}@example.com`;
+            const registerResult = await testEndpoint(
+                'User Registration',
+                'POST',
+                `${API_URL}/auth/register`,
+                {
+                    name: 'Test User',
+                    email: testEmail,
+                    password: 'Test123!'
+                }
+            );
+            
+            if (registerResult && registerResult.token) {
+                authToken = registerResult.token;
+                log('🔑 Auth token obtained', 'warning');
+            }
+            
+            // Test 5: User Login
+            const loginResult = await testEndpoint(
+                'User Login',
+                'POST',
+                `${API_URL}/auth/login`,
+                {
+                    email: testEmail,
+                    password: 'Test123!'
+                }
+            );
+            
+            if (loginResult && loginResult.token) {
+                authToken = loginResult.token;
+            }
+            
+            // Test 6: Get Products
+            await testEndpoint('Get Products', 'GET', `${API_URL}/products`);
+            
+            // Test 7: Search Products
+            await testEndpoint('Search Products', 'GET', `${API_URL}/products/search?query=test`);
+            
+            // Test 8: Get Ads
+            await testEndpoint('Get Advertisements', 'GET', `${API_URL}/ads`);
+            
+            // Test 9: Get Current Ad
+            await testEndpoint('Get Current Ad', 'GET', `${API_URL}/ads/current`);
+            
+            // Test 10: Protected Route - Get Certificates
+            await testEndpoint('Get Certificates (Auth)', 'GET', `${API_URL}/certificates`, null, true);
+            
+            // Test 11: Protected Route - Get NFTs
+            await testEndpoint('Get NFTs (Auth)', 'GET', `${API_URL}/nft/list`, null, true);
+            
+            // Test 12: Verify Product
+            await testEndpoint(
+                'Verify Product',
+                'POST',
+                `${API_URL}/verify/barcode`,
+                { barcode: '1234567890' }
+            );
+            
+            log('✨ All tests completed!', 'warning');
+        }
+
+        async function testLogin() {
+            const email = document.getElementById('testEmail').value;
+            const password = document.getElementById('testPassword').value;
+            
+            const result = await testEndpoint(
+                'Manual Login Test',
+                'POST',
+                `${API_URL}/auth/login`,
+                { email, password }
+            );
+            
+            if (result && result.token) {
+                authToken = result.token;
+                log('🔑 Login successful! Token saved.', 'success');
+            }
+        }
+
+        async function testRegister() {
+            const email = document.getElementById('testEmail').value;
+            const password = document.getElementById('testPassword').value;
+            
+            const result = await testEndpoint(
+                'Manual Registration Test',
+                'POST',
+                `${API_URL}/auth/register`,
+                { 
+                    name: 'Test User',
+                    email, 
+                    password 
+                }
+            );
+            
+            if (result && result.token) {
+                authToken = result.token;
+                log('🔑 Registration successful! Token saved.', 'success');
+            }
+        }
+
+        // Auto-run tests on page load
+        window.addEventListener('load', () => {
+            log('📋 Test page loaded. Click "Run All Tests" to begin.', 'warning');
+        });
+    </script>
+</body>
+</html>

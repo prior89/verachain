@@ -27,14 +27,16 @@ const ProfileScreen = () => {
   }, [user]);
 
   const fetchProfileData = async () => {
-    // Simulate fetching profile data
     if (user) {
+      console.log('Current user data:', user);
+      
       setProfileData({
-        email: user.email || 'user@example.com',
-        memberSince: new Date(user.joinedDate || Date.now() - 90 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-        membershipTier: user.membershipTier || 'Basic',
-        totalAuthentications: Math.floor(Math.random() * 100) + 10,
-        totalNFTs: Math.floor(Math.random() * 20) + 1,
+        email: user.email || 'No email available',
+        memberSince: user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 
+                     new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+        membershipTier: (user.membershipTier || 'basic').toUpperCase(),
+        totalAuthentications: user.stats?.totalVerifications || 0,
+        totalNFTs: user.stats?.successfulVerifications || 0,
         lastActivity: new Date().toLocaleDateString()
       });
     }

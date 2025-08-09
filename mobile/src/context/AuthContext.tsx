@@ -1,5 +1,6 @@
 import React, {createContext, useContext, useReducer, useEffect, ReactNode} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../services/api';
 
 interface User {
   id: string;
@@ -83,18 +84,20 @@ export const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
     dispatch({type: 'SET_LOADING', payload: true});
     
     try {
-      // 목업 로그인 (실제 API 서비스로 교체 가능)
-      await new Promise(resolve => setTimeout(resolve, 1500)); // 로딩 시뮬레이션
-      
-      // 기본 테스트 계정 확인
-      if (email === 'test@verachain.com' && password === 'password') {
+      const response = await api.post('/auth/login', {
+        email,
+        password,
+      });
+
+      if (response.data.success && response.data.data) {
+        const userData = response.data.data;
         const user = {
-          id: '1',
-          email: 'test@verachain.com',
-          name: 'VeraChain User'
+          id: userData._id,
+          email: userData.email,
+          name: userData.name,
         };
         
-        await AsyncStorage.setItem('authToken', 'mock_token_12345');
+        await AsyncStorage.setItem('authToken', userData.token);
         await AsyncStorage.setItem('userData', JSON.stringify(user));
         dispatch({type: 'SET_USER', payload: user});
         return true;
@@ -113,18 +116,21 @@ export const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
     dispatch({type: 'SET_LOADING', payload: true});
     
     try {
-      // 목업 회원가입 (실제 API 서비스로 교체 가능)
-      await new Promise(resolve => setTimeout(resolve, 2000)); // 로딩 시뮬레이션
-      
-      // 간단한 이메일 유효성 검사
-      if (email.includes('@') && password.length >= 6) {
+      const response = await api.post('/auth/register', {
+        email,
+        password,
+        name: name || 'User',
+      });
+
+      if (response.data.success && response.data.data) {
+        const userData = response.data.data;
         const user = {
-          id: Math.random().toString(36).substr(2, 9),
-          email: email,
-          name: name || 'New User'
+          id: userData._id,
+          email: userData.email,
+          name: userData.name,
         };
         
-        await AsyncStorage.setItem('authToken', 'mock_token_' + Date.now());
+        await AsyncStorage.setItem('authToken', userData.token);
         await AsyncStorage.setItem('userData', JSON.stringify(user));
         dispatch({type: 'SET_USER', payload: user});
         return true;

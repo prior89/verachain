@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeraChain Frontend Button Testing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #764ba2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-bar {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .badge-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        
+        .test-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .test-card h2 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(118, 75, 162, 0.3);
+        }
+        
+        .test-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .test-result {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .result-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .result-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .result-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .result-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .input-group input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+        
+        .control-buttons {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .control-button {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .control-button:hover {
+            background: #218838;
+        }
+        
+        .control-button.danger {
+            background: #dc3545;
+        }
+        
+        .control-button.danger:hover {
+            background: #c82333;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #764ba2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .response-viewer {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .icon {
+            font-size: 20px;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .status-success { background: #28a745; }
+        .status-error { background: #dc3545; }
+        .status-pending { background: #ffc107; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 VeraChain Frontend Button API Testing Dashboard</h1>
+            <div class="status-bar">
+                <div class="status-item">
+                    <span>Total Tests:</span>
+                    <span class="status-badge badge-pending" id="totalTests">0</span>
+                </div>
+                <div class="status-item">
+                    <span>Passed:</span>
+                    <span class="status-badge badge-success" id="passedTests">0</span>
+                </div>
+                <div class="status-item">
+                    <span>Failed:</span>
+                    <span class="status-badge badge-error" id="failedTests">0</span>
+                </div>
+                <div class="status-item">
+                    <span>Token:</span>
+                    <span class="status-badge badge-pending" id="tokenStatus">Not Set</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-buttons">
+            <button class="control-button" onclick="runAllTests()">🚀 Run All Tests</button>
+            <button class="control-button" onclick="runAuthTests()">🔐 Test Auth Only</button>
+            <button class="control-button" onclick="runProductTests()">📦 Test Products Only</button>
+            <button class="control-button" onclick="runNFTTests()">🎨 Test NFTs Only</button>
+            <button class="control-button danger" onclick="clearResults()">🗑️ Clear Results</button>
+            <button class="control-button danger" onclick="clearToken()">🔓 Clear Token</button>
+        </div>
+
+        <div class="test-grid">
+            <!-- Authentication Tests -->
+            <div class="test-card">
+                <h2>🔐 Authentication</h2>
+                <div class="input-group">
+                    <input type="email" id="authEmail" placeholder="Email" value="test@example.com">
+                    <input type="password" id="authPassword" placeholder="Password" value="Test123!">
+                </div>
+                <button class="test-button" onclick="testRegister()">
+                    <span>Register New User</span>
+                    <span class="icon">👤</span>
+                </button>
+                <button class="test-button" onclick="testLogin()">
+                    <span>Login User</span>
+                    <span class="icon">🔑</span>
+                </button>
+                <button class="test-button" onclick="testGetProfile()">
+                    <span>Get Profile</span>
+                    <span class="icon">👤</span>
+                </button>
+                <button class="test-button" onclick="testUpdateProfile()">
+                    <span>Update Profile</span>
+                    <span class="icon">✏️</span>
+                </button>
+                <button class="test-button" onclick="testChangePassword()">
+                    <span>Change Password</span>
+                    <span class="icon">🔒</span>
+                </button>
+                <div id="authResults"></div>
+            </div>
+
+            <!-- Product Tests -->
+            <div class="test-card">
+                <h2>📦 Products</h2>
+                <div class="input-group">
+                    <input type="text" id="productName" placeholder="Product Name" value="Test Product">
+                    <input type="text" id="productBrand" placeholder="Brand" value="Test Brand">
+                </div>
+                <button class="test-button" onclick="testGetProducts()">
+                    <span>Get All Products</span>
+                    <span class="icon">📋</span>
+                </button>
+                <button class="test-button" onclick="testSearchProducts()">
+                    <span>Search Products</span>
+                    <span class="icon">🔍</span>
+                </button>
+                <button class="test-button" onclick="testCreateProduct()">
+                    <span>Create Product</span>
+                    <span class="icon">➕</span>
+                </button>
+                <button class="test-button" onclick="testGetUserProducts()">
+                    <span>Get My Products</span>
+                    <span class="icon">📦</span>
+                </button>
+                <button class="test-button" onclick="testVerifyProduct()">
+                    <span>Verify Product</span>
+                    <span class="icon">✅</span>
+                </button>
+                <div id="productResults"></div>
+            </div>
+
+            <!-- Verification Tests -->
+            <div class="test-card">
+                <h2>🔍 Verification & Scan</h2>
+                <div class="input-group">
+                    <input type="text" id="barcode" placeholder="Barcode" value="1234567890123">
+                    <input type="text" id="serialNumber" placeholder="Serial" value="SN123456">
+                </div>
+                <button class="test-button" onclick="testVerifyBarcode()">
+                    <span>Verify by Barcode</span>
+                    <span class="icon">📷</span>
+                </button>
+                <button class="test-button" onclick="testVerifySerial()">
+                    <span>Verify by Serial</span>
+                    <span class="icon">🔢</span>
+                </button>
+                <button class="test-button" onclick="testVerifyQR()">
+                    <span>Verify by QR Code</span>
+                    <span class="icon">📱</span>
+                </button>
+                <button class="test-button" onclick="testOCRScan()">
+                    <span>OCR Text Scan</span>
+                    <span class="icon">📄</span>
+                </button>
+                <div id="verificationResults"></div>
+            </div>
+
+            <!-- NFT/Certificate Tests -->
+            <div class="test-card">
+                <h2>🎨 NFTs & Certificates</h2>
+                <button class="test-button" onclick="testGetCertificates()">
+                    <span>Get My Certificates</span>
+                    <span class="icon">📜</span>
+                </button>
+                <button class="test-button" onclick="testGetNFTs()">
+                    <span>Get My NFTs</span>
+                    <span class="icon">🎨</span>
+                </button>
+                <button class="test-button" onclick="testMintNFT()">
+                    <span>Mint New NFT</span>
+                    <span class="icon">🪙</span>
+                </button>
+                <button class="test-button" onclick="testTransferNFT()">
+                    <span>Transfer NFT</span>
+                    <span class="icon">📤</span>
+                </button>
+                <button class="test-button" onclick="testGenerateQR()">
+                    <span>Generate QR for NFT</span>
+                    <span class="icon">📱</span>
+                </button>
+                <div id="nftResults"></div>
+            </div>
+
+            <!-- Advertisement Tests -->
+            <div class="test-card">
+                <h2>📺 Advertisements</h2>
+                <button class="test-button" onclick="testGetAds()">
+                    <span>Get All Ads</span>
+                    <span class="icon">📢</span>
+                </button>
+                <button class="test-button" onclick="testGetCurrentAd()">
+                    <span>Get Current Ad</span>
+                    <span class="icon">🎬</span>
+                </button>
+                <button class="test-button" onclick="testTrackImpression()">
+                    <span>Track Ad Impression</span>
+                    <span class="icon">👁️</span>
+                </button>
+                <button class="test-button" onclick="testGetAdSchedule()">
+                    <span>Get Ad Schedule</span>
+                    <span class="icon">📅</span>
+                </button>
+                <div id="adResults"></div>
+            </div>
+
+            <!-- System Tests -->
+            <div class="test-card">
+                <h2>⚙️ System & Health</h2>
+                <button class="test-button" onclick="testHealthCheck()">
+                    <span>Health Check</span>
+                    <span class="icon">💓</span>
+                </button>
+                <button class="test-button" onclick="testCORS()">
+                    <span>Test CORS</span>
+                    <span class="icon">🌐</span>
+                </button>
+                <button class="test-button" onclick="testRateLimit()">
+                    <span>Test Rate Limiting</span>
+                    <span class="icon">⏱️</span>
+                </button>
+                <button class="test-button" onclick="testWebSocket()">
+                    <span>Test WebSocket</span>
+                    <span class="icon">🔌</span>
+                </button>
+                <div id="systemResults"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5001/api';
+        const FRONTEND_URL = 'http://localhost:3001';
+        let authToken = localStorage.getItem('testAuthToken') || '';
+        let testStats = { total: 0, passed: 0, failed: 0 };
+        let lastProductId = null;
+        let lastNFTId = null;
+
+        // Update UI elements
+        function updateStats() {
+            document.getElementById('totalTests').textContent = testStats.total;
+            document.getElementById('passedTests').textContent = testStats.passed;
+            document.getElementById('failedTests').textContent = testStats.failed;
+            document.getElementById('tokenStatus').textContent = authToken ? 'Set' : 'Not Set';
+            document.getElementById('tokenStatus').className = authToken ? 'status-badge badge-success' : 'status-badge badge-error';
+        }
+
+        // Log test results
+        function logResult(containerId, message, type = 'info', response = null) {
+            const container = document.getElementById(containerId);
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result result-${type}`;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            let icon = '📝';
+            if (type === 'success') icon = '✅';
+            else if (type === 'error') icon = '❌';
+            else if (type === 'warning') icon = '⚠️';
+            
+            resultDiv.innerHTML = `${icon} [${timestamp}] ${message}`;
+            
+            if (response) {
+                const viewer = document.createElement('div');
+                viewer.className = 'response-viewer';
+                viewer.textContent = JSON.stringify(response, null, 2);
+                resultDiv.appendChild(viewer);
+            }
+            
+            container.appendChild(resultDiv);
+            
+            testStats.total++;
+            if (type === 'success') testStats.passed++;
+            else if (type === 'error') testStats.failed++;
+            
+            updateStats();
+        }
+
+        // Clear results
+        function clearResults() {
+            document.querySelectorAll('[id$="Results"]').forEach(el => el.innerHTML = '');
+            testStats = { total: 0, passed: 0, failed: 0 };
+            updateStats();
+        }
+
+        // Clear token
+        function clearToken() {
+            authToken = '';
+            localStorage.removeItem('testAuthToken');
+            updateStats();
+            logResult('authResults', 'Token cleared', 'warning');
+        }
+
+        // Generic API test function
+        async function testAPI(name, method, endpoint, data = null, containerId = 'systemResults') {
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+                
+                if (authToken) {
+                    options.headers['Authorization'] = `Bearer ${authToken}`;
+                }
+                
+                if (data) {
+                    options.body = JSON.stringify(data);
+                }
+                
+                const response = await fetch(`${API_URL}${endpoint}`, options);
+                const result = await response.json();
+                
+                if (response.ok) {
+                    logResult(containerId, `${name}: SUCCESS`, 'success', result);
+                    return result;
+                } else {
+                    logResult(containerId, `${name}: FAILED (${response.status})`, 'error', result);
+                    return null;
+                }
+            } catch (error) {
+                logResult(containerId, `${name}: ERROR - ${error.message}`, 'error');
+                return null;
+            }
+        }
+
+        // Authentication Tests
+        async function testRegister() {
+            const email = `test${Date.now()}@example.com`;
+            const result = await testAPI(
+                'Register',
+                'POST',
+                '/auth/register',
+                {
+                    name: 'Test User',
+                    email: email,
+                    password: document.getElementById('authPassword').value
+                },
+                'authResults'
+            );
+            
+            if (result && result.token) {
+                authToken = result.token;
+                localStorage.setItem('testAuthToken', authToken);
+                updateStats();
+            }
+        }
+
+        async function testLogin() {
+            const result = await testAPI(
+                'Login',
+                'POST',
+                '/auth/login',
+                {
+                    email: document.getElementById('authEmail').value,
+                    password: document.getElementById('authPassword').value
+                },
+                'authResults'
+            );
+            
+            if (result && result.token) {
+                authToken = result.token;
+                localStorage.setItem('testAuthToken', authToken);
+                updateStats();
+            }
+        }
+
+        async function testGetProfile() {
+            await testAPI('Get Profile', 'GET', '/auth/profile', null, 'authResults');
+        }
+
+        async function testUpdateProfile() {
+            await testAPI(
+                'Update Profile',
+                'PUT',
+                '/auth/update-profile',
+                {
+                    name: 'Updated Test User',
+                    email: document.getElementById('authEmail').value
+                },
+                'authResults'
+            );
+        }
+
+        async function testChangePassword() {
+            await testAPI(
+                'Change Password',
+                'PUT',
+                '/auth/update-password',
+                {
+                    currentPassword: document.getElementById('authPassword').value,
+                    newPassword: 'NewTest123!'
+                },
+                'authResults'
+            );
+        }
+
+        // Product Tests
+        async function testGetProducts() {
+            await testAPI('Get Products', 'GET', '/products', null, 'productResults');
+        }
+
+        async function testSearchProducts() {
+            const query = document.getElementById('productName').value;
+            await testAPI('Search Products', 'GET', `/products/search?query=${query}`, null, 'productResults');
+        }
+
+        async function testCreateProduct() {
+            const result = await testAPI(
+                'Create Product',
+                'POST',
+                '/products',
+                {
+                    name: document.getElementById('productName').value,
+                    brand: document.getElementById('productBrand').value,
+                    category: 'Test Category',
+                    description: 'Test product description',
+                    serialNumber: `SN${Date.now()}`,
+                    price: 99.99
+                },
+                'productResults'
+            );
+            
+            if (result && result.data && result.data._id) {
+                lastProductId = result.data._id;
+            }
+        }
+
+        async function testGetUserProducts() {
+            await testAPI('Get User Products', 'GET', '/products/user/my-products', null, 'productResults');
+        }
+
+        async function testVerifyProduct() {
+            await testAPI(
+                'Verify Product',
+                'POST',
+                '/products/verify',
+                {
+                    productId: lastProductId || '123456',
+                    method: 'qr'
+                },
+                'productResults'
+            );
+        }
+
+        // Verification Tests
+        async function testVerifyBarcode() {
+            await testAPI(
+                'Verify Barcode',
+                'POST',
+                '/verify/barcode',
+                {
+                    barcode: document.getElementById('barcode').value
+                },
+                'verificationResults'
+            );
+        }
+
+        async function testVerifySerial() {
+            await testAPI(
+                'Verify Serial',
+                'POST',
+                '/verify/serial',
+                {
+                    serialNumber: document.getElementById('serialNumber').value
+                },
+                'verificationResults'
+            );
+        }
+
+        async function testVerifyQR() {
+            await testAPI(
+                'Verify QR',
+                'POST',
+                '/verify/qr',
+                {
+                    qrData: 'test-qr-data'
+                },
+                'verificationResults'
+            );
+        }
+
+        async function testOCRScan() {
+            await testAPI(
+                'OCR Scan',
+                'POST',
+                '/verify/ocr',
+                {
+                    imageData: 'base64-image-data-here'
+                },
+                'verificationResults'
+            );
+        }
+
+        // NFT/Certificate Tests
+        async function testGetCertificates() {
+            await testAPI('Get Certificates', 'GET', '/certificates', null, 'nftResults');
+        }
+
+        async function testGetNFTs() {
+            await testAPI('Get NFTs', 'GET', '/nft/list', null, 'nftResults');
+        }
+
+        async function testMintNFT() {
+            const result = await testAPI(
+                'Mint NFT',
+                'POST',
+                '/nft/mint',
+                {
+                    productId: lastProductId || '123456',
+                    metadata: {
+                        name: 'Test NFT',
+                        description: 'Test NFT Description'
+                    }
+                },
+                'nftResults'
+            );
+            
+            if (result && result.data && result.data.tokenId) {
+                lastNFTId = result.data.tokenId;
+            }
+        }
+
+        async function testTransferNFT() {
+            await testAPI(
+                'Transfer NFT',
+                'POST',
+                '/nft/transfer',
+                {
+                    tokenId: lastNFTId || '1',
+                    toAddress: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0'
+                },
+                'nftResults'
+            );
+        }
+
+        async function testGenerateQR() {
+            await testAPI(
+                'Generate QR',
+                'GET',
+                `/nft/qr/${lastNFTId || '1'}`,
+                null,
+                'nftResults'
+            );
+        }
+
+        // Advertisement Tests
+        async function testGetAds() {
+            await testAPI('Get Ads', 'GET', '/ads', null, 'adResults');
+        }
+
+        async function testGetCurrentAd() {
+            await testAPI('Get Current Ad', 'GET', '/ads/current', null, 'adResults');
+        }
+
+        async function testTrackImpression() {
+            await testAPI(
+                'Track Impression',
+                'POST',
+                '/ads/impression',
+                {
+                    adId: 1,
+                    duration: 5000
+                },
+                'adResults'
+            );
+        }
+
+        async function testGetAdSchedule() {
+            await testAPI('Get Ad Schedule', 'GET', '/ads/schedule', null, 'adResults');
+        }
+
+        // System Tests
+        async function testHealthCheck() {
+            await testAPI('Health Check', 'GET', '/health', null, 'systemResults');
+        }
+
+        async function testCORS() {
+            try {
+                const response = await fetch(`${API_URL}/health`, {
+                    method: 'GET',
+                    headers: {
+                        'Origin': FRONTEND_URL
+                    }
+                });
+                
+                if (response.ok) {
+                    logResult('systemResults', 'CORS: Configured correctly', 'success');
+                } else {
+                    logResult('systemResults', 'CORS: Failed', 'error');
+                }
+            } catch (error) {
+                logResult('systemResults', `CORS: Error - ${error.message}`, 'error');
+            }
+        }
+
+        async function testRateLimit() {
+            logResult('systemResults', 'Testing rate limit (5 rapid requests)...', 'info');
+            let blocked = false;
+            
+            for (let i = 0; i < 5; i++) {
+                try {
+                    const response = await fetch(`${API_URL}/health`);
+                    if (response.status === 429) {
+                        blocked = true;
+                        logResult('systemResults', `Rate limit triggered at request ${i + 1}`, 'warning');
+                        break;
+                    }
+                } catch (error) {
+                    logResult('systemResults', `Rate limit test error: ${error.message}`, 'error');
+                }
+            }
+            
+            if (!blocked) {
+                logResult('systemResults', 'Rate limit: Not triggered (may be disabled for development)', 'info');
+            }
+        }
+
+        async function testWebSocket() {
+            logResult('systemResults', 'WebSocket: Testing connection...', 'info');
+            
+            try {
+                const ws = new WebSocket('ws://localhost:5001');
+                
+                ws.onopen = () => {
+                    logResult('systemResults', 'WebSocket: Connected', 'success');
+                    ws.close();
+                };
+                
+                ws.onerror = (error) => {
+                    logResult('systemResults', 'WebSocket: Not available or not configured', 'warning');
+                };
+                
+                ws.onclose = () => {
+                    logResult('systemResults', 'WebSocket: Connection closed', 'info');
+                };
+                
+                setTimeout(() => {
+                    if (ws.readyState !== WebSocket.CLOSED) {
+                        ws.close();
+                    }
+                }, 3000);
+            } catch (error) {
+                logResult('systemResults', `WebSocket: Error - ${error.message}`, 'error');
+            }
+        }
+
+        // Run all tests
+        async function runAllTests() {
+            clearResults();
+            logResult('systemResults', 'Starting comprehensive test suite...', 'info');
+            
+            // Auth tests
+            await testHealthCheck();
+            await testCORS();
+            await testRegister();
+            await testLogin();
+            await testGetProfile();
+            
+            // Product tests
+            await testGetProducts();
+            await testSearchProducts();
+            await testCreateProduct();
+            await testGetUserProducts();
+            
+            // Verification tests
+            await testVerifyBarcode();
+            await testVerifySerial();
+            
+            // NFT tests
+            await testGetCertificates();
+            await testGetNFTs();
+            
+            // Ad tests
+            await testGetAds();
+            await testGetCurrentAd();
+            await testGetAdSchedule();
+            
+            logResult('systemResults', `Test suite completed! Passed: ${testStats.passed}/${testStats.total}`, 
+                      testStats.failed === 0 ? 'success' : 'warning');
+        }
+
+        // Run specific test groups
+        async function runAuthTests() {
+            clearResults();
+            await testRegister();
+            await testLogin();
+            await testGetProfile();
+            await testUpdateProfile();
+            await testChangePassword();
+        }
+
+        async function runProductTests() {
+            if (!authToken) {
+                logResult('productResults', 'Please login first to test product endpoints', 'warning');
+                return;
+            }
+            await testGetProducts();
+            await testSearchProducts();
+            await testCreateProduct();
+            await testGetUserProducts();
+            await testVerifyProduct();
+        }
+
+        async function runNFTTests() {
+            if (!authToken) {
+                logResult('nftResults', 'Please login first to test NFT endpoints', 'warning');
+                return;
+            }
+            await testGetCertificates();
+            await testGetNFTs();
+            await testMintNFT();
+            await testGenerateQR();
+        }
+
+        // Initialize
+        updateStats();
+        logResult('systemResults', 'Test dashboard loaded. Click "Run All Tests" to begin comprehensive testing.', 'info');
+    </script>
+</body>
+</html>

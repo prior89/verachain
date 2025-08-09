@@ -52,9 +52,28 @@
   gap: 20px;
 }
 
+.user-info {
+  text-align: right;
+}
+
 .user-name {
   color: #d4af37;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-details small {
+  color: #aaa;
+  font-size: 12px;
+  display: block;
 }
 
 .logout-btn {

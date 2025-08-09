@@ -6,6 +6,53 @@ const router = express.Router();
  * Minimal implementation for testing
  */
 
+// Get all ads
+router.get('/', (req, res) => {
+  try {
+    const ads = [
+      {
+        id: 1,
+        brand: 'Chanel',
+        title: 'Chanel Classic Collection',
+        videoUrl: '/assets/ads/chanel_ad.mp4',
+        imageUrl: '/assets/ads/chanel_ad.jpg',
+        duration: 30000,
+        active: true
+      },
+      {
+        id: 2,
+        brand: 'Hermes',
+        title: 'Hermes Craftsmanship',
+        videoUrl: '/assets/ads/hermes_ad.mp4',
+        imageUrl: '/assets/ads/hermes_ad.jpg',
+        duration: 30000,
+        active: true
+      },
+      {
+        id: 3,
+        brand: 'Rolex',
+        title: 'Rolex Precision',
+        videoUrl: '/assets/ads/rolex_ad.mp4',
+        imageUrl: '/assets/ads/rolex_ad.jpg',
+        duration: 30000,
+        active: true
+      }
+    ];
+    
+    res.json({
+      success: true,
+      ads: ads,
+      count: ads.length
+    });
+  } catch (error) {
+    console.error('Get ads error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to get advertisements'
+    });
+  }
+});
+
 // Get current advertisement based on time
 router.get('/current', (req, res) => {
   try {
