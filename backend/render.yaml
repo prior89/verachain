@@ -18,7 +18,7 @@ services:
       - key: CORS_ORIGIN
         value: https://verachain-pl.vercel.app
       - key: ALLOWED_ORIGINS
-        value: https://verachain-pl.vercel.app,https://verachain.vercel.app,https://verachain-app.vercel.app
+        value: https://verachain-pl.vercel.app,https://verachain.vercel.app,https://verachain-app.vercel.app,https://verachain-8nrdsq1mg-prior89s-projects.vercel.app,https://verachain-mobile.vercel.app
       - key: ALCHEMY_API_KEY
         value: 3bYhEJy3MLCkCVHczuFMc
       - key: POLYGON_RPC_URL

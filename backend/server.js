@@ -36,7 +36,9 @@ const corsOptions = {
       'http://localhost:3001',
       'https://verachain-pl.vercel.app',
       'https://verachain.vercel.app',
-      'https://verachain-app.vercel.app'
+      'https://verachain-app.vercel.app',
+      'https://verachain-8nrdsq1mg-prior89s-projects.vercel.app',
+      'https://verachain-mobile.vercel.app'
     ];
     
     // Vercel 도메인 자동 허용
