@@ -51,40 +51,22 @@ const generalLimiter = createRateLimiter(
 );
 
 /**
- * CORS configuration
+ * CORS configuration - Disabled for mobile app compatibility
  */
 const corsOptions = {
-  origin: function (origin, callback) {
-    const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'http://127.0.0.1:3000',
-      'http://127.0.0.1:3001',
-      'https://verachain-pl.vercel.app',
-      'https://verachain-frontend.vercel.app'
-    ];
-    
-    // Allow requests with no origin (mobile apps, Postman, local files)
-    if (!origin) return callback(null, true);
-    
-    // Allow file:// protocol for local testing
-    if (origin.startsWith('file://')) return callback(null, true);
-    
-    // Allow all localhost origins for development
-    if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
-      return callback(null, true);
-    }
-    
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: true, // Allow all origins for mobile app compatibility
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  exposedHeaders: ['X-Privacy-Protected'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization',
+    'X-Requested-With',
+    'Accept',
+    'Origin',
+    'Access-Control-Request-Method',
+    'Access-Control-Request-Headers'
+  ],
+  exposedHeaders: ['X-Privacy-Protected', 'authorization', 'set-cookie'],
   maxAge: 86400 // 24 hours
 };
 

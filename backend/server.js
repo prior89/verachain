@@ -28,55 +28,7 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// CORS 설정 - 모든 도메인 허용 (모바일 앱 지원)
-const corsOptions = {
-  origin: true, // 모든 도메인 허용
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'],
-  allowedHeaders: [
-    'Content-Type', 
-    'Authorization', 
-    'X-Requested-With',
-    'Accept',
-    'Origin',
-    'Access-Control-Request-Method',
-    'Access-Control-Request-Headers',
-    'X-Forwarded-For',
-    'X-Real-IP'
-  ],
-  exposedHeaders: ['set-cookie', 'authorization'],
-  preflightContinue: false,
-  optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
-
-// 추가 CORS 헤더 설정 미들웨어 - 모든 요청에 대해 허용
-app.use((req, res, next) => {
-  const origin = req.headers.origin || req.headers.referer || '*';
-  
-  res.header('Access-Control-Allow-Origin', origin);
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH,HEAD');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers, X-Forwarded-For, X-Real-IP');
-  res.header('Access-Control-Expose-Headers', 'set-cookie, authorization');
-  
-  console.log(`🌐 CORS Request from: ${origin} - Method: ${req.method}`);
-  
-  if (req.method === 'OPTIONS') {
-    console.log('🔄 OPTIONS preflight handled');
-    res.status(200).end();
-    return;
-  }
-  
-  next();
-});
-
-// Body parser
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Apply security middleware
+// Apply security middleware (includes CORS, body parsing, etc.)
 applySecurity(app);
 
 // Apply privacy protection middleware
