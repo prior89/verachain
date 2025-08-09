@@ -280,8 +280,26 @@ const applySecurity = (app) => {
   // Basic security headers
   app.use(helmetConfig);
   
-  // CORS
-  app.use(cors(corsOptions));
+  // CORS - 수동으로 설정 (미들웨어 충돌 방지)
+  app.use((req, res, next) => {
+    // 모든 도메인 허용
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH,HEAD');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers');
+    res.header('Access-Control-Expose-Headers', 'X-Privacy-Protected, authorization, set-cookie');
+    res.header('Access-Control-Max-Age', '86400');
+    
+    // OPTIONS 요청에 대해 바로 응답
+    if (req.method === 'OPTIONS') {
+      console.log(`🔄 OPTIONS preflight from: ${req.headers.origin} for ${req.url}`);
+      res.status(200).end();
+      return;
+    }
+    
+    console.log(`🌐 ${req.method} ${req.url} from: ${req.headers.origin || 'unknown'}`);
+    next();
+  });
   
   // Body parsing security
   app.use(express.json({ limit: '10mb' }));
