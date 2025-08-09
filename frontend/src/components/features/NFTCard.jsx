@@ -18,7 +18,7 @@ const NFTCard = ({ certificate }) => {
               {certificate.brand}
             </div>
             <div className="verified-badge">
-              [Shield]
+              CERT
               VERIFIED
             </div>
           </div>
@@ -48,19 +48,19 @@ const NFTCard = ({ certificate }) => {
             <h3>Blockchain Details</h3>
             
             <div className="info-item">
-              <Cpu size={16} />
+              <span className="icon-text">BLK</span>
               <span className="label">Block</span>
               <span className="value">#{certificate.blockNumber}</span>
             </div>
             
             <div className="info-item">
-              <Hash size={16} />
+              <span className="icon-text">TOK</span>
               <span className="label">Token ID</span>
               <span className="value">#{certificate.tokenId}</span>
             </div>
             
             <div className="info-item">
-              <Network size={16} />
+              <span className="icon-text">NET</span>
               <span className="label">Network</span>
               <span className="value">Polygon</span>
             </div>

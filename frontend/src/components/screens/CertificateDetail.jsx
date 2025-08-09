@@ -50,7 +50,7 @@ const CertificateDetail = () => {
               </div>
               
               <div className="verified-badge">
-                [Shield]
+                CERT
                 <span>VERIFIED</span>
               </div>
               
@@ -59,7 +59,7 @@ const CertificateDetail = () => {
             
             <div className="card-back">
               <div className="blockchain-header">
-                <Link size={20} />
+                <span className="blockchain-icon">CHAIN</span>
                 <span>BLOCKCHAIN DATA</span>
               </div>
               

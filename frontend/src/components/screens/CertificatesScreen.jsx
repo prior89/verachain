@@ -153,11 +153,11 @@ const CertificatesScreen = () => {
       {/* Header */}
       <div className="certificates-header">
         <button className="back-button" onClick={() => navigate(-1)}>
-          <span className="back-text">??/span>
+          <span className="back-text">BACK</span>
         </button>
         
         <h1 className="screen-title">
-          [Shield]
+          VERIFIED
           My Certificates
         </h1>
         
@@ -250,7 +250,7 @@ const CertificatesScreen = () => {
         </div>
       ) : filteredCertificates.length === 0 ? (
         <div className="empty-state">
-          [Shield]
+          EMPTY
           <h3>No Certificates Found</h3>
           <p>Start by scanning a product to create your first certificate</p>
           <button onClick={() => navigate('/scan')} className="scan-button">

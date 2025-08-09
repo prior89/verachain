@@ -10,9 +10,9 @@ const ScanOverlay = ({
   const getStateIcon = () => {
     switch (state) {
       case 'success':
-        return [✓];
+        return <span className="state-text success">OK</span>;
       case 'error':
-        return <AlertCircle size={48} className="state-icon error" />;
+        return <span className="state-text error">ERROR</span>;
       default:
         return null;
     }
@@ -25,11 +25,11 @@ const ScanOverlay = ({
       case 'scanning_product':
         return 'Scanning product...';
       case 'product_verified':
-        return 'Product verified ??;
+        return 'Product verified!';
       case 'scanning_certificate':
         return 'Scanning certificate...';
       case 'complete':
-        return 'Authentication complete ??;
+        return 'Authentication complete!';
       case 'error':
         return 'Scan failed. Please try again.';
       default:

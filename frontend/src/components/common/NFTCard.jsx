@@ -106,7 +106,7 @@ const NFTCard = ({ certificate, onClick }) => {
             animate={{ scale: 1 }}
             transition={{ delay: 0.3, type: "spring" }}
           >
-            [Shield]
+            CERT
             <span>VERIFIED</span>
           </motion.div>
         </div>
@@ -169,12 +169,12 @@ const NFTCard = ({ certificate, onClick }) => {
             transition={{ delay: 0.5 }}
           >
             <div className="info-item">
-              <Award size={14} />
+              <span className="icon-text">CERT</span>
               <span className="info-label">Certificate</span>
               <span className="info-value">#{certificate.displayId}</span>
             </div>
             <div className="info-item">
-              <Calendar size={14} />
+              <span className="icon-text">DATE</span>
               <span className="info-label">Issued</span>
               <span className="info-value">{new Date().toLocaleDateString()}</span>
             </div>
@@ -227,7 +227,7 @@ const NFTCard = ({ certificate, onClick }) => {
         <div className="blockchain-header">
           <h3>Blockchain Certificate</h3>
           <div className="network-badge">
-            <Network size={16} />
+            <span className="network-icon">NET</span>
             <span>Polygon Amoy</span>
           </div>
         </div>
@@ -239,7 +239,7 @@ const NFTCard = ({ certificate, onClick }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <Cpu size={16} />
+            <span className="icon-text">BLK</span>
             <span className="label">Block</span>
             <span className="value">#{certificate.blockNumber || '000000'}</span>
           </motion.div>
@@ -250,7 +250,7 @@ const NFTCard = ({ certificate, onClick }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <Hash size={16} />
+            <span className="icon-text">TOK</span>
             <span className="label">Token ID</span>
             <span className="value">#{certificate.tokenId || 'PENDING'}</span>
           </motion.div>
@@ -286,7 +286,7 @@ const NFTCard = ({ certificate, onClick }) => {
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
                 >
-                  <Hash size={32} />
+                  <span className="loading-text">QR</span>
                 </motion.div>
                 <span>Generating QR...</span>
               </div>

@@ -168,21 +168,21 @@ const ScanView = ({ onScanComplete, onError }) => {
   const getStatusIcon = () => {
     switch (scanState) {
       case SCAN_STATES.SCANNING_PRODUCT:
-        return <Package className="status-icon scanning" />;
+        return <span className="status-text scanning">PRODUCT</span>;
       case SCAN_STATES.PRODUCT_VERIFIED:
-        return [✓];
+        return <span className="status-text success">OK</span>;
       case SCAN_STATES.PRODUCT_FAILED:
-        return [X];
+        return <span className="status-text error">FAIL</span>;
       case SCAN_STATES.SCANNING_CERTIFICATE:
-        return <FileText className="status-icon scanning" />;
+        return <span className="status-text scanning">CERTIFICATE</span>;
       case SCAN_STATES.CERTIFICATE_VERIFIED:
-        return [✓];
+        return <span className="status-text success">OK</span>;
       case SCAN_STATES.CERTIFICATE_FAILED:
-        return [X];
+        return <span className="status-text error">FAIL</span>;
       case SCAN_STATES.COMPLETE:
-        return [✓];
+        return <span className="status-text success">OK</span>;
       default:
-        return <Scan className="status-icon" />;
+        return <span className="status-text">SCAN</span>;
     }
   };
 
@@ -204,7 +204,7 @@ const ScanView = ({ onScanComplete, onError }) => {
           />
         ) : (
           <div className="camera-error">
-            <CameraOff size={48} />
+            <span className="camera-error-text">NO CAMERA</span>
             <p>Camera access denied</p>
             <button onClick={() => window.location.reload()}>
               Retry
@@ -343,7 +343,7 @@ const ScanView = ({ onScanComplete, onError }) => {
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
             >
-              <Loader2 className="loading-icon" />
+              <span className="loading-text">LOADING</span>
             </motion.div>
           )}
         </div>
@@ -357,7 +357,7 @@ const ScanView = ({ onScanComplete, onError }) => {
               whileTap={{ scale: 0.95 }}
               onClick={startScan}
             >
-              <Camera size={20} />
+              <span className="button-icon">CAM</span>
               Start Scan
             </motion.button>
           )}
