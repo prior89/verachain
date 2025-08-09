@@ -1,16 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Volume2, 
-  VolumeX, 
-  Play, 
-  Pause, 
-  SkipForward,
-  Maximize,
-  X,
-  ChevronLeft,
-  ChevronRight
-} from 'lucide-react';
+// Icons removed per CLAUDE.md specifications - text-only UI
 import './AdDisplay.css';
 
 const AdDisplay = ({ 
@@ -217,7 +207,7 @@ const AdDisplay = ({
                     handlePlayPause();
                   }}
                 >
-                  {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+                  <span className="control-text">{isPlaying ? '⏸' : '▶'}</span>
                 </button>
                 
                 <button 
@@ -227,7 +217,7 @@ const AdDisplay = ({
                     handleMuteToggle();
                   }}
                 >
-                  {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                  <span className="control-text">{isMuted ? '🔇' : '🔊'}</span>
                 </button>
               </div>
             </div>
@@ -281,7 +271,7 @@ const AdDisplay = ({
             onClick={handlePrevious}
             aria-label="Previous ad"
           >
-            <ChevronLeft size={24} />
+            <span className="nav-text">‹</span>
           </button>
           
           <button 
@@ -289,7 +279,7 @@ const AdDisplay = ({
             onClick={handleNext}
             aria-label="Next ad"
           >
-            <ChevronRight size={24} />
+            <span className="nav-text">›</span>
           </button>
         </div>
       )}
@@ -334,7 +324,7 @@ const AdDisplay = ({
             onClick={handlePlayPause}
             aria-label={isPlaying ? 'Pause' : 'Play'}
           >
-            {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+            <span className="control-text">{isPlaying ? '⏸' : '▶'}</span>
           </button>
           
           {ads.length > 1 && (
@@ -343,7 +333,7 @@ const AdDisplay = ({
               onClick={handleNext}
               aria-label="Skip"
             >
-              <SkipForward size={16} />
+              <span className="control-text">⏭</span>
             </button>
           )}
         </div>
@@ -360,7 +350,7 @@ const AdDisplay = ({
             onClick={handleFullscreen}
             aria-label="Fullscreen"
           >
-            {isFullscreen ? <X size={16} /> : <Maximize size={16} />}
+            <span className="control-text">{isFullscreen ? '✖' : '⛶'}</span>
           </button>
         </div>
       </div>
