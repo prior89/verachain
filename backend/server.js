@@ -2,9 +2,11 @@
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
+const passport = require('passport');
 dotenv.config();
 
 const { connectDB } = require('./src/config/database');
+const { configurePassport } = require('./src/config/passport');
 const errorHandler = require('./src/middleware/errorHandler');
 const { applySecurity } = require('./src/middleware/securityMiddleware');
 const { 
@@ -16,6 +18,7 @@ const {
 } = require('./src/middleware/privacyProtection');
 
 const authRoutes = require('./src/routes/authRoutes');
+const authRoutesEnhanced = require('./src/routes/authRoutes.enhanced');
 const productRoutes = require('./src/routes/productRoutes');
 const verificationRoutes = require('./src/routes/verificationRoutes');
 const nftRoutes = require('./src/routes/nftRoutes');
@@ -28,8 +31,14 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 10000;
 
+// Configure Passport strategies
+configurePassport();
+
 // Apply security middleware (includes CORS, body parsing, etc.)
 applySecurity(app);
+
+// Initialize Passport
+app.use(passport.initialize());
 
 // Apply privacy protection middleware
 app.use(anonymizeIP);
@@ -71,6 +80,7 @@ app.get('/api/test', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/auth-enhanced', authRoutesEnhanced);
 app.use('/api/products', productRoutes);
 app.use('/api/verify', verificationRoutes);
 app.use('/api/nft', nftRoutes);
