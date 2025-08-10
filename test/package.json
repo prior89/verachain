@@ -1,0 +1,22 @@
+{
+  "name": "verachain-mobile",
+  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "lint": "echo \"(add eslint if needed)\""
+  },
+  "dependencies": {
+    "expo": "~51.0.16",
+    "react": "18.2.0",
+    "react-native": "0.74.5",
+    "@react-navigation/native": "^6.1.17",
+    "@react-navigation/native-stack": "^6.9.26",
+    "@react-navigation/bottom-tabs": "^6.6.5",
+    "expo-camera": "~15.0.14",
+    "expo-barcode-scanner": "~12.10.1",
+    "expo-status-bar": "~1.12.1"
+  }
+}
