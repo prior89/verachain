@@ -84,6 +84,9 @@ export async function logout() {
   }
 }
 
+// Export the api instance for direct use
+export { api };
+
 // Product verification
 export async function verifyProduct(payload: { productId: string }) {
   try {

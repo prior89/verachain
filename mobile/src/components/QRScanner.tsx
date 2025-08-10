@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Vibration } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
-import { BarCodeScanningResult } from 'expo-camera/build/Camera.types';
+import { BarcodeScanningResult } from 'expo-camera/build/Camera.types';
 
 interface Props {
   mode: 'product' | 'certificate';
@@ -18,7 +18,7 @@ export default function QRScanner({ mode, onScanned }: Props) {
   if (!permission) return <View />;
   if (!permission.granted) return <Text>Camera permission is required.</Text>;
 
-  const handleScan = (res: BarCodeScanningResult) => {
+  const handleScan = (res: BarcodeScanningResult) => {
     if (scanned) return;
     setScanned(true);
     Vibration.vibrate(30);

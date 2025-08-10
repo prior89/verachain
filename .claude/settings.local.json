@@ -34,7 +34,15 @@
       "Bash(USE_MEMORY_DB=true node server.js)",
       "Bash(cp:*)",
       "Bash(start \"C:\\Users\\VeraChain\\mobile\\automated-test.html\")",
-      "Bash(start http://localhost:8081)"
+      "Bash(start http://localhost:8081)",
+<<<<<<< Updated upstream
+      "Bash(git pull:*)"
+=======
+      "Bash(git reset:*)",
+      "Bash(npx tsc:*)",
+      "Bash(start \"C:\\Users\\VeraChain\\mobile\\compatibility-test.html\")",
+      "Bash(git stash:*)"
+>>>>>>> Stashed changes
     ],
     "deny": []
   }
