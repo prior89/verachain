@@ -2,23 +2,25 @@ services:
   - type: web
     name: verachain-backend
     env: node
-    buildCommand: npm install
+    region: oregon
+    plan: free
+    buildCommand: npm install --production
     startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: MONGODB_URI
-        value: mongodb://127.0.0.1:27017/verachain
+        value: mongodb+srv://verachain:1674614ppappa@verachain-cluster.izpeptn.mongodb.net/?retryWrites=true&w=majority&appName=verachain-cluster
       - key: JWT_SECRET
         value: verachain-jwt-secret-2025-production
       - key: PORT
-        value: 10000
+        value: 5000
       - key: FRONTEND_URL
-        value: https://verachain-pl.vercel.app
+        value: https://prior89.github.io
       - key: CORS_ORIGIN
-        value: https://verachain-pl.vercel.app
+        value: https://prior89.github.io
       - key: ALLOWED_ORIGINS
-        value: https://verachain-pl.vercel.app,https://verachain.vercel.app,https://verachain-app.vercel.app,https://verachain-8nrdsq1mg-prior89s-projects.vercel.app,https://verachain-mobile.vercel.app
+        value: https://prior89.github.io,https://verachain-pl.vercel.app,https://verachain.vercel.app,https://verachain-app.vercel.app
       - key: ALCHEMY_API_KEY
         value: 3bYhEJy3MLCkCVHczuFMc
       - key: POLYGON_RPC_URL
@@ -39,3 +41,9 @@ services:
         value: false
       - key: SHOW_PREVIOUS_OWNERS
         value: false
+      - key: USE_MEMORY_DB
+        value: false
+      - key: AI_SERVICE_ENABLED
+        value: true
+      - key: TENSORFLOW_BACKEND
+        value: cpu
