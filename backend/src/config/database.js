@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
+    // 메모리 DB 모드 체크
+    if (process.env.USE_MEMORY_DB === 'true') {
+      console.log('🗄️ Using in-memory database (no MongoDB required)');
+      return;
+    }
+
     let mongoURI;
     
     // MongoDB Atlas 연결 (환경변수 분리 방식)
