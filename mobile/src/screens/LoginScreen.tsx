@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,154 +6,200 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  ActivityIndicator,
+  SafeAreaView,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
 } from 'react-native';
-import {useAuth} from '../context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { login } from '../lib/api';
 
-const LoginScreen: React.FC = () => {
+export default function LoginScreen() {
+  const navigation = useNavigation<any>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {login, isLoading} = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    if (!email.trim() || !password.trim()) {
-      Alert.alert('오류', '이메일과 비밀번호를 입력해주세요.');
+    if (!email || !password) {
+      Alert.alert('오류', '모든 필드를 입력해주세요');
       return;
     }
 
-    const success = await login(email, password);
-    if (!success) {
-      Alert.alert('로그인 실패', '이메일 또는 비밀번호가 올바르지 않습니다.');
+    setLoading(true);
+    try {
+      const response = await login({ email, password });
+      if (response.ok && response.data?.token) {
+        await AsyncStorage.setItem('authToken', response.data.token);
+        await AsyncStorage.setItem('user', JSON.stringify(response.data.user));
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Home' }],
+        });
+      } else {
+        Alert.alert('로그인 실패', response.error || '잘못된 인증 정보입니다');
+      }
+    } catch (error) {
+      Alert.alert('오류', '서버 연결에 실패했습니다');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView 
+        style={styles.keyboardView}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            <Icon name="arrow-back" size={24} color="#1a1a1a" />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.content}>
+          <Icon name="shield-checkmark" size={64} color="#667eea" />
           <Text style={styles.title}>VeraChain</Text>
-          <Text style={styles.subtitle}>진품 인증의 새로운 기준</Text>
-        </View>
+          <Text style={styles.subtitle}>로그인</Text>
 
-        <View style={styles.form}>
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>이메일</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              placeholder="이메일을 입력하세요"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
+          <View style={styles.form}>
+            <View style={styles.inputContainer}>
+              <Icon name="mail-outline" size={20} color="#6c757d" />
+              <TextInput
+                style={styles.input}
+                placeholder="이메일"
+                value={email}
+                onChangeText={setEmail}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                editable={!loading}
+                placeholderTextColor="#adb5bd"
+              />
+            </View>
+            
+            <View style={styles.inputContainer}>
+              <Icon name="lock-closed-outline" size={20} color="#6c757d" />
+              <TextInput
+                style={styles.input}
+                placeholder="비밀번호"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+                editable={!loading}
+                placeholderTextColor="#adb5bd"
+              />
+            </View>
+
+            <TouchableOpacity 
+              style={[styles.button, loading && styles.buttonDisabled]}
+              onPress={handleLogin}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.buttonText}>로그인</Text>
+              )}
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              onPress={() => navigation.navigate('Register')}
+              disabled={loading}
+              style={styles.linkButton}
+            >
+              <Text style={styles.linkText}>
+                계정이 없으신가요? <Text style={styles.linkTextBold}>회원가입</Text>
+              </Text>
+            </TouchableOpacity>
           </View>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>비밀번호</Text>
-            <TextInput
-              style={styles.input}
-              value={password}
-              onChangeText={setPassword}
-              placeholder="비밀번호를 입력하세요"
-              secureTextEntry
-              autoCapitalize="none"
-            />
-          </View>
-
-          <TouchableOpacity
-            style={[styles.button, styles.loginButton]}
-            onPress={handleLogin}
-            disabled={isLoading}>
-            <Text style={styles.loginButtonText}>
-              {isLoading ? '로그인 중...' : '로그인'}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.registerLink}>
-            <Text style={styles.registerLinkText}>
-              계정이 없으신가요? 회원가입
-            </Text>
-          </TouchableOpacity>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#f8f9fa',
   },
-  scrollContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    padding: 24,
+  keyboardView: {
+    flex: 1,
   },
   header: {
+    paddingHorizontal: 20,
+    paddingTop: 10,
+  },
+  backButton: {
+    padding: 8,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 48,
+    paddingHorizontal: 30,
+    marginTop: -50,
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#8B5CF6',
-    marginBottom: 8,
+    color: '#1a1a1a',
+    marginTop: 16,
   },
   subtitle: {
-    fontSize: 16,
-    color: '#6B7280',
-    textAlign: 'center',
+    fontSize: 18,
+    color: '#6c757d',
+    marginTop: 8,
+    marginBottom: 32,
   },
   form: {
     width: '100%',
   },
-  inputGroup: {
-    marginBottom: 20,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#374151',
-    marginBottom: 8,
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#e9ecef',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#D1D5DB',
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    flex: 1,
+    paddingVertical: 16,
+    marginLeft: 12,
     fontSize: 16,
-    backgroundColor: '#FFFFFF',
+    color: '#1a1a1a',
   },
   button: {
-    borderRadius: 8,
-    paddingVertical: 14,
+    backgroundColor: '#667eea',
+    borderRadius: 12,
+    paddingVertical: 18,
     alignItems: 'center',
     marginTop: 8,
   },
-  loginButton: {
-    backgroundColor: '#8B5CF6',
+  buttonDisabled: {
+    opacity: 0.6,
   },
-  loginButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 18,
     fontWeight: '600',
   },
-  registerLink: {
+  linkButton: {
     marginTop: 24,
-    alignItems: 'center',
   },
-  registerLinkText: {
-    color: '#8B5CF6',
-    fontSize: 14,
-    fontWeight: '500',
+  linkText: {
+    color: '#6c757d',
+    textAlign: 'center',
+    fontSize: 15,
+  },
+  linkTextBold: {
+    color: '#667eea',
+    fontWeight: '600',
   },
 });
-
-export default LoginScreen;
