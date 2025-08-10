@@ -49,8 +49,9 @@ connectDB();
 
 // Express 애플리케이션 인스턴스 생성 (Create Express application instance)
 const app = express();
-// 서버 포트 설정 - 환경변수 또는 기본값 10000 (Server port - environment variable or default 10000)
-const PORT = process.env.PORT || 10000;
+// FIXED SERVER PORT - Always use 5000 for consistency (MongoDB Atlas deployment standard)
+// 고정 서버 포트 - MongoDB Atlas 배포 표준으로 5000 포트 고정 사용
+const PORT = process.env.PORT || 5000;
 
 // 보안 미들웨어 적용 (Apply security middleware)
 // CORS, body parsing, 헬멧 등의 보안 설정을 포함합니다 (Includes CORS, body parsing, helmet security settings)

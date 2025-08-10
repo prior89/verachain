@@ -1,9 +1,19 @@
 
+// 🚨 LEGACY API - SCHEDULED FOR DEPRECATION
+// ⚡ NEW: Use extensible architecture from ./index.ts instead
+// 📖 Migration Guide: See README-ARCHITECTURE.md
+
+// MIGRATION EXAMPLE:
+// OLD: import { handleQrFlow } from './lib/api';  
+// NEW: import { serviceContainer } from './lib';
+//      const blockchainService = serviceContainer.getBlockchainService();
+
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Use production server (local server has MongoDB auth issues)
-const API_URL = 'https://verachain-backend2.onrender.com';
+// FIXED API URL - Standard MongoDB Atlas deployment port
+// 고정 API URL - MongoDB Atlas 배포 표준 포트
+const API_URL = 'http://localhost:5000';
 
 // Create axios instance with default config
 const api = axios.create({
