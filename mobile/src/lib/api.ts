@@ -11,9 +11,11 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// FIXED API URL - Standard MongoDB Atlas deployment port
-// 고정 API URL - MongoDB Atlas 배포 표준 포트
-const API_URL = 'http://localhost:5002';
+// FIXED API URL - Production ready endpoint
+// 고정 API URL - 프로덕션 준비 엔드포인트
+const API_URL = __DEV__ 
+  ? 'http://10.0.2.2:5002'  // Android Emulator에서 localhost 접근
+  : 'https://verachain-backend2.onrender.com';  // 프로덕션 환경
 
 // Create axios instance with default config
 const api = axios.create({

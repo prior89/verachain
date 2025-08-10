@@ -9,7 +9,7 @@ class ConfigManager {
   private configs = {
     development: {
       api: {
-        baseURL: 'http://localhost:5002', // FIXED: Current active backend port
+        baseURL: 'http://10.0.2.2:5002', // FIXED: Android emulator localhost access
         timeout: 30000,
         headers: { 'Content-Type': 'application/json' }
       },
