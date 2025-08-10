@@ -31,6 +31,7 @@ export default function LoginScreen() {
     setLoading(true);
     try {
       const response = await login({ email, password });
+      
       if (response.ok && response.data?.token) {
         await AsyncStorage.setItem('authToken', response.data.token);
         await AsyncStorage.setItem('user', JSON.stringify(response.data.user));

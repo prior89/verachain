@@ -17,7 +17,20 @@
       "Bash(set SKIP_MONGODB=true)",
       "Bash(winget install:*)",
       "Bash(mongod:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(start http://localhost:8083)",
+      "Bash(start C:UsersVeraChainmobileautomated-test.html)",
+      "Bash(start automated-test.html)",
+      "Bash(curl:*)",
+      "Bash(start http://localhost:3001)",
+      "Bash(npx expo prebuild:*)",
+      "Bash(mkdir:*)",
+      "Bash(npx expo export:*)",
+      "Bash(rm:*)",
+      "Bash(git rm:*)",
+      "Bash(taskkill:*)",
+      "Bash(true)",
+      "Bash(git restore:*)"
     ],
     "deny": []
   }
