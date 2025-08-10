@@ -72,7 +72,7 @@ export async function verifyProduct(qrCode: string) {
 
 // 4. Switch environments at runtime
 export function switchEnvironment(env: 'development' | 'staging' | 'production') {
-  const configManager = serviceContainer.get('configManager');
+  const configManager = serviceContainer.get<any>('configManager');
   configManager.setEnvironment(env);
   
   // Update API service with new config
@@ -86,7 +86,7 @@ export function setupCustomEnvironment() {
   const container = initializeForReactNative(null, 'development');
   
   // Override config for specific deployment
-  const configManager = container.get('configManager');
+  const configManager = container.get<any>('configManager');
   configManager.updateConfig('development', {
     api: {
       baseURL: 'https://custom-api-endpoint.com',

@@ -1,12 +1,12 @@
 // Main entry point for the extensible architecture
 
+// Types
+export * from './core/types';
+
 // Core exports
 export { default as ConfigManager } from './core/config';
 export { serviceContainer, ServiceContainer } from './core/service.container';
 export { ApiService } from './core/api.service';
-
-// Types
-export * from './core/types';
 
 // Auth providers
 export { 
@@ -38,6 +38,10 @@ export function initializeForReactNative(
     setLoading?: (loading: boolean) => void;
   }
 ) {
+  const { createAuthProvider } = require('./core/auth');
+  const { createUIAdapter } = require('./adapters/ui.adapter');
+  const { serviceContainer } = require('./core/service.container');
+  
   const authProvider = createAuthProvider('react-native');
   const uiAdapter = createUIAdapter('react-native', { navigation, ...options });
   
@@ -50,6 +54,10 @@ export function initializeForWeb(
   router?: any,
   environment: 'development' | 'staging' | 'production' = 'development'
 ) {
+  const { createAuthProvider } = require('./core/auth');
+  const { createUIAdapter } = require('./adapters/ui.adapter');
+  const { serviceContainer } = require('./core/service.container');
+  
   const authProvider = createAuthProvider('web');
   const uiAdapter = createUIAdapter('web', { router });
   
@@ -61,6 +69,10 @@ export function initializeForWeb(
 export function initializeForNode(
   environment: 'development' | 'staging' | 'production' = 'development'
 ) {
+  const { createAuthProvider } = require('./core/auth');
+  const { createUIAdapter } = require('./adapters/ui.adapter');
+  const { serviceContainer } = require('./core/service.container');
+  
   const authProvider = createAuthProvider('node');
   const uiAdapter = createUIAdapter('console');
   

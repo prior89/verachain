@@ -55,7 +55,7 @@ export class ProductService {
     this.uiAdapter.showLoading();
     
     try {
-      const result = await this.apiService.post('/api/products/verify', { qrCode });
+      const result = await this.apiService.post<{ isAuthentic: boolean; product?: Product }>('/api/products/verify', { qrCode });
       
       if (result.isAuthentic) {
         this.uiAdapter.showSuccess('Product verified as authentic');

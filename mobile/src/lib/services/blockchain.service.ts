@@ -19,7 +19,7 @@ export class BlockchainService {
         ? { tokenId: qr } 
         : { productId: qr, metadata: { scannedAt: new Date(), role } };
       
-      const response = await this.apiService.post(endpoint, payload);
+      const response = await this.apiService.post<any>(endpoint, payload);
       
       const result: QRFlowResult = { 
         txId: response.transactionHash || response.txHash || '0x...', 

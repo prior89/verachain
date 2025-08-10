@@ -2,7 +2,10 @@
 export interface ApiConfig {
   baseURL: string;
   timeout: number;
-  headers: Record<string, string>;
+  headers: {
+    'Content-Type': string;
+    [key: string]: string;
+  };
 }
 
 export interface AuthProvider {

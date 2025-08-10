@@ -146,16 +146,23 @@ const result = await blockchainService.handleQRFlow(qrCode, role);
 
 ## Environment Configuration
 
-The system supports multiple environments with different API endpoints:
+🔒 **FIXED CONFIGURATION - See CONFIG-FIXED.md for change approval process**
+
+The system supports multiple environments with **VERIFIED** API endpoints:
 
 ```typescript
-// Development: http://localhost:5004
-// Staging: https://staging-api.verachain.com  
-// Production: https://verachain-backend2.onrender.com
+// 🔒 FIXED Development: http://localhost:5000 (MongoDB Atlas standard)
+// 🚧 TODO Staging: https://staging-api.verachain.com  
+// 🔒 FIXED Production: https://verachain-backend2.onrender.com
 
 // Switch at runtime
 ConfigManager.getInstance().setEnvironment('production');
 ```
+
+⚠️ **Port Change History:**
+- ~~http://localhost:5004~~ (Deprecated)
+- ~~http://localhost:10000~~ (Deprecated)  
+- **http://localhost:5000** ✅ (CURRENT - MongoDB Atlas deployment standard)
 
 ## Platform Support
 

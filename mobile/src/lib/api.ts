@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // FIXED API URL - Standard MongoDB Atlas deployment port
 // 고정 API URL - MongoDB Atlas 배포 표준 포트
-const API_URL = 'http://localhost:5000';
+const API_URL = 'http://localhost:5002';
 
 // Create axios instance with default config
 const api = axios.create({

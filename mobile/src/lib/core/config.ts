@@ -9,7 +9,7 @@ class ConfigManager {
   private configs = {
     development: {
       api: {
-        baseURL: 'http://localhost:5000', // FIXED: MongoDB Atlas standard port
+        baseURL: 'http://localhost:5002', // FIXED: Current active backend port
         timeout: 30000,
         headers: { 'Content-Type': 'application/json' }
       },
