@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const memoryDB = require('../database/memoryDB');
-
-let useMemoryDB = false;
 
 const connectDB = async () => {
   try {
@@ -17,24 +14,12 @@ const connectDB = async () => {
       minPoolSize: 1
     });
 
-    useMemoryDB = false;
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     console.log(`🗄️ Database: ${conn.connection.name}`);
   } catch (error) {
     console.error(`❌ MongoDB Connection Failed: ${error.message}`);
-    console.log('🔄 Switching to in-memory database for development...');
-    useMemoryDB = true;
-    console.log('✅ In-Memory Database Active');
+    throw error; // MongoDB가 필수이므로 연결 실패 시 서버 종료
   }
 };
 
-// Database abstraction layer
-const getDB = () => {
-  return {
-    isMemoryDB: useMemoryDB,
-    memoryDB: useMemoryDB ? memoryDB : null,
-    mongoose: !useMemoryDB ? mongoose : null
-  };
-};
-
-module.exports = { connectDB, getDB };
+module.exports = { connectDB };

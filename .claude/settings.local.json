@@ -1,7 +1,23 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(npm start)",
+      "Bash(npm run android:*)",
+      "Bash(npx expo start:*)",
+      "Bash(npm install:*)",
+      "Bash(npm start)",
+      "Bash(npm install)",
+      "Bash(npx expo install:*)",
+      "Bash(set NODE_ENV=development)",
+      "Bash(curl:*)",
+      "Bash(set USE_MEMORY_DB=true)",
+      "Bash(node:*)",
+      "Bash(set SKIP_MONGODB=true)",
+      "Bash(winget install:*)",
+      "Bash(mongod:*)",
+      "Bash(node:*)"
     ],
     "deny": []
   }

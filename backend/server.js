@@ -17,12 +17,10 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
-const passport = require('passport');
 dotenv.config(); // 환경 변수 로드 (Load environment variables)
 
 // 데이터베이스 및 설정 모듈 (Database and configuration modules)
 const { connectDB } = require('./src/config/database');
-const { configurePassport } = require('./src/config/passport');
 
 // 미들웨어 모듈 (Middleware modules)
 const errorHandler = require('./src/middleware/errorHandler');
@@ -39,7 +37,6 @@ const {
 
 // API 라우트 모듈 (API route modules)
 const authRoutes = require('./src/routes/authRoutes');                     // 기본 인증 라우트 (Basic authentication routes)
-const authRoutesEnhanced = require('./src/routes/authRoutes.enhanced');     // 향상된 인증 라우트 (Enhanced authentication routes)
 const productRoutes = require('./src/routes/productRoutes');               // 제품 관리 라우트 (Product management routes)
 const verificationRoutes = require('./src/routes/verificationRoutes');     // 진품 인증 라우트 (Product verification routes)
 const nftRoutes = require('./src/routes/nftRoutes');                       // NFT 관리 라우트 (NFT management routes)
@@ -55,17 +52,9 @@ const app = express();
 // 서버 포트 설정 - 환경변수 또는 기본값 10000 (Server port - environment variable or default 10000)
 const PORT = process.env.PORT || 10000;
 
-// Passport 인증 전략 설정 (Configure Passport authentication strategies)
-// OAuth, JWT 토큰 등의 인증 방법을 설정합니다 (Set up authentication methods like OAuth, JWT tokens)
-configurePassport();
-
 // 보안 미들웨어 적용 (Apply security middleware)
 // CORS, body parsing, 헬멧 등의 보안 설정을 포함합니다 (Includes CORS, body parsing, helmet security settings)
 applySecurity(app);
-
-// Passport 미들웨어 초기화 (Initialize Passport middleware)
-// 사용자 인증 세션 관리를 위해 필요합니다 (Required for user authentication session management)
-app.use(passport.initialize());
 
 // 개인정보 보호 미들웨어 적용 (Apply privacy protection middleware)
 // 사용자 데이터와 개인정보를 보호하기 위한 다층 보안 시스템 (Multi-layer security system to protect user data and privacy)
@@ -118,7 +107,6 @@ app.get('/api/test', (req, res) => {
 // API 라우터 등록 (Register API routers)
 // 각 기능별로 분리된 라우터를 메인 애플리케이션에 연결합니다 (Connect feature-separated routers to the main application)
 app.use('/api/auth', authRoutes);                    // 기본 인증: 로그인, 회원가입, 토큰 관리 (Basic auth: login, register, token management)
-app.use('/api/auth-enhanced', authRoutesEnhanced);   // 향상된 인증: OAuth, 2FA, 소셜 로그인 (Enhanced auth: OAuth, 2FA, social login)
 app.use('/api/products', productRoutes);             // 제품 관리: CRUD, 검색, 필터링 (Product management: CRUD, search, filtering)
 app.use('/api/verify', verificationRoutes);          // 진품 인증: QR 코드, AI 분석 (Product verification: QR code, AI analysis)
 app.use('/api/nft', nftRoutes);                      // NFT 관리: 민팅, 전송, 메타데이터 (NFT management: minting, transfer, metadata)
