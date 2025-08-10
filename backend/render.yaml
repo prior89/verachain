@@ -42,7 +42,7 @@ services:
       - key: SHOW_PREVIOUS_OWNERS
         value: false
       - key: USE_MEMORY_DB
-        value: false
+        value: true
       - key: AI_SERVICE_ENABLED
         value: true
       - key: TENSORFLOW_BACKEND
