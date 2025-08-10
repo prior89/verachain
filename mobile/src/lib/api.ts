@@ -2,6 +2,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Use production server (local server has MongoDB auth issues)
 const API_URL = 'https://verachain-backend2.onrender.com';
 
 // Create axios instance with default config

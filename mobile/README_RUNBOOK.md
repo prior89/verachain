@@ -44,3 +44,4 @@ git push -u origin feature/mobile-ui
 - Wire-up to your backend endpoints and Polygon Amoy testnet (or chosen chain)
 - Decide TxID display policy and set `showTxId = true` if required
 - Optional: add share-to-Kakao/URL copy on certificate detail
+mongodb+srv://verachain:<1674614ppa!>@verachain-cluster.izpeptn.mongodb.net/?retryWrites=true&w=majority&appName=verachain-cluster
