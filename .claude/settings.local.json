@@ -30,7 +30,11 @@
       "Bash(git rm:*)",
       "Bash(taskkill:*)",
       "Bash(true)",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(USE_MEMORY_DB=true node server.js)",
+      "Bash(cp:*)",
+      "Bash(start \"C:\\Users\\VeraChain\\mobile\\automated-test.html\")",
+      "Bash(start http://localhost:8081)"
     ],
     "deny": []
   }

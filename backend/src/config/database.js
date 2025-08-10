@@ -18,7 +18,7 @@ const connectDB = async () => {
     console.log(`🗄️ Database: ${conn.connection.name}`);
   } catch (error) {
     console.error(`❌ MongoDB Connection Failed: ${error.message}`);
-    throw error; // MongoDB가 필수이므로 연결 실패 시 서버 종료
+    throw error;
   }
 };
 
